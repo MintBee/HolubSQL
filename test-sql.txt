@@ -1,0 +1,58 @@
+C:/Users/user/projects/assg
+
+-- table creation
+
+create table address (
+  primary key (id),
+  addrId
+);
+
+create table name (
+  primary key (id),
+  theName,
+  addrId
+);
+
+-- insert data
+
+insert into address (addrId) values (1);
+insert into address (addrId) values (2);
+insert into address (addrId) values (3);
+
+insert into name (theName, addrId) values (aello, 1);
+insert into name (theName, addrId) values (bello, 1);
+insert into name (theName, addrId) values (cello, 2);
+
+-- select data
+
+select * from address
+
+
+
+------------------------------ without comment
+C:/Users/user/projects/assg
+
+create table address (
+  primary key (id),
+  addrId
+);
+
+create table name (
+  primary key (id),
+  theName,
+  addrId
+);
+
+insert into address (addrId) values (1);
+insert into address (addrId) values (2);
+insert into address (addrId) values (3);
+
+insert into name (theName, addrId) values ("aello", 1);
+insert into name (theName, addrId) values ("bello", 1);
+insert into name (theName, addrId) values ("cello", 2);
+
+select * from address;
+
+select addrId, theName from address, name where address.addrId = name.addrId and addrId = 1;
+select * from address, name where address.addrId = name.addrId;
+select * from address, name where address.addrId = name.addrId and addrId = 1;
