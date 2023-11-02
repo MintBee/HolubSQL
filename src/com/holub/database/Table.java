@@ -29,9 +29,6 @@ package com.holub.database;
 import java.io.*;
 import java.util.*;
 import com.holub.database.Selector;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 /** A table is a database-like table that provides support for
  *  queries.
@@ -285,7 +282,7 @@ public interface Table extends Serializable, Cloneable
 	 *	</ul>
 	 */
 	public interface Importer				//{=Table.Importer}
-	{	void 	 startTable() throws IOException, ParserConfigurationException, SAXException;
+	{	void 	 startTable()		throws IOException;
 		String   loadTableName()	throws IOException;
 		int 	 loadWidth()		throws IOException;
 		Iterator loadColumnNames()	throws IOException;
