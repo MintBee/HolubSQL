@@ -69,7 +69,7 @@ import com.holub.tools.ArrayIterator;
 
 	/**********************************************************************
 	 * Create a table with the given name and columns.
-	 * 
+	 *
 	 * @param tableName the name of the table.
 	 * @param columnNames array of Strings that specify the column names.
 	 */
@@ -509,7 +509,7 @@ import com.holub.tools.ArrayIterator;
 
 	/**
 	 * Insert an approved row into the result table:
-	 * 
+	 *
 	 * <PRE>
 	 * 		for( every requested column )
 	 * 			for( every table in the join )
@@ -517,7 +517,7 @@ import com.holub.tools.ArrayIterator;
 	 * 					add the associated value to the result table
 	 *
 	 * </PRE>
-	 * 
+	 *
 	 * Only one column with a given name is added, even if that column appears in
 	 * multiple tables. Columns in tables at the beginning of the list take
 	 * precedence over identically named columns that occur later in the list.
@@ -542,7 +542,7 @@ import com.holub.tools.ArrayIterator;
 	 * A collection variant on the array version. Just converts the collection to an
 	 * array and then chains to the other version
 	 * ({@linkplain #select(Selector,String[],Table[]) see}).
-	 * 
+	 *
 	 * @param requestedColumns the value returned from the {@link #toString} method
 	 *                         of the elements of this collection are used as the
 	 *                         column names.
@@ -809,12 +809,12 @@ import com.holub.tools.ArrayIterator;
 																				// fail if this operation fails.
 
 			Writer out = new FileWriter("people");
-			people.export(new CSVExporter(out));
+			people.export(new XMLExporter(out));
 			out.close();
 
-			Reader in = new FileReader("people");
-			people = new ConcreteTable(new CSVImporter(in));
-			in.close();
+//			Reader in = new FileReader("people");
+//			people = new ConcreteTable(new CSVImporter(in));
+//			in.close();
 		}
 
 		public void testJoin() {
