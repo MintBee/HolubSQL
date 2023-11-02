@@ -29,6 +29,9 @@ package com.holub.database;
 import java.io.*;
 import java.util.*;
 import com.holub.tools.ArrayIterator;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * A concrete implementation of the {@link Table} interface that implements an
@@ -95,7 +98,7 @@ import com.holub.tools.ArrayIterator;
 	/**********************************************************************
 	 * Create a table using an importer. See {@link CSVImporter} for an example.
 	 */
-	public ConcreteTable(Table.Importer importer) throws IOException {
+	public ConcreteTable(Table.Importer importer) throws IOException, ParserConfigurationException, SAXException {
 		importer.startTable();
 
 		tableName = importer.loadTableName();
@@ -803,7 +806,7 @@ import com.holub.tools.ArrayIterator;
 				/* it failed correctly */ }
 		}
 
-		public void testStore() throws IOException, ClassNotFoundException { // Flush the table to disk, then reread it.
+		public void testStore() throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException { // Flush the table to disk, then reread it.
 																				// Subsequent tests that use the
 																				// "people" table will
 																				// fail if this operation fails.
