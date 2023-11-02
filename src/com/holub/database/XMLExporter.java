@@ -12,10 +12,7 @@ public class XMLExporter implements Table.Exporter {
 	}
 	public void storeMetadata( String tableName,int width,int height,Iterator columnNames ) throws IOException {
 		this.width = width;
-		out.write("<root>");
 		out.write("<title>" + tableName + "</title>");
-		out.write("<width>" + width + "</width>");
-		out.write("<height>" + height + "</height>");
 		out.write("<columnNames>");
 		while( columnNames.hasNext() )
 			out.write("<columnName>" + columnNames.next() + "</columnName>");
@@ -30,8 +27,12 @@ public class XMLExporter implements Table.Exporter {
 				out.write("<data>" + datum.toString() + "</data>");
 		}
 		out.write("</row>");
-
 	}
-	public void startTable() throws IOException {/*nothing to do*/}
-	public void endTable()   throws IOException {/*nothing to do*/}
+	public void startTable() throws IOException {
+		out.write("<root>");
+	}
+	public void endTable()   throws IOException {
+		out.write("</root>");
+		out.close();
+	}
 }
