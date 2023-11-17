@@ -18,11 +18,11 @@ import java.util.*;
 public class XMLImporter implements Table.Importer{
 
     private final File in;
-    private String[] columnNames;
+    private String[] columnNames = null;
     private int index = 0;
     private String tableName;
-    private Iterator[] rows;
-    private String[] values;
+    private Iterator[] rows = null;
+    private String[] values = null;
 
     public XMLImporter(File in){
         this.in = in;
@@ -44,16 +44,22 @@ public class XMLImporter implements Table.Importer{
 
         tableName = root.getNodeName();
 
+        rows = new Iterator[children.getLength()];
+
         for(int i=0; i<children.getLength(); i++){
             Node node = children.item(i);
             NodeList childNodes = node.getChildNodes();
+            if(columnNames == null) {
+                columnNames = new String[childNodes.getLength()];
+            }
+            values = new String[childNodes.getLength()];
             for(int j=0; j<childNodes.getLength();j++) {
                 Node child = childNodes.item(j);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    if (columnNames.length < children.getLength()) {
-                        columnNames[j] = child.getNodeName();
-                    }
-                    values[j] = child.getNodeValue();
+
+                if (child.getNodeType() == Node.ELEMENT_NODE) {
+                    Element _ele = (Element)child;
+                    columnNames[j] = _ele.getNodeName();
+                    values[j] = _ele.getTextContent();
                 }
             }
             rows[i] = new ArrayIterator(values);
