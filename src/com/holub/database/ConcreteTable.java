@@ -809,7 +809,7 @@ import com.holub.tools.ArrayIterator;
 																				// "people" table will
 																				// fail if this operation fails.
 
-			Writer out = new FileWriter("people");
+			Writer out = new FileWriter("people.xml");
 			people.export(new XMLExporter(out));
 			out.close();
 
