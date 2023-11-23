@@ -16,25 +16,21 @@ public class HTMLExporter implements Table.Exporter {
         out.write("<caption>");
         out.write(tableName == null ? "<anonymous>" : tableName);
         out.write("/<caption>");
-        out.write("\n");
 
         storeTableHead(columnNames);
-        out.write("\n");
     }
 
     public void storeRow(Iterator data) throws IOException {
-        // 데코레이터로 변경 가능
-        out.write("<tr>\n");
+        out.write("<tr>");
         while (data.hasNext()) {
             Object datum = data.next();
-            out.write("<td>" + datum.toString() + "</td>\n");
+            out.write("<td>" + datum.toString() + "</td>");
         }
-        // 데코레이터로 변경 가능
-        out.write("</tr>\n");
+        out.write("</tr>");
     }
 
     public void startTable() throws IOException {
-        out.write("<table>\n");
+        out.write("<table>");
     }
 
     public void endTable() throws IOException {
@@ -42,11 +38,11 @@ public class HTMLExporter implements Table.Exporter {
     }
 
     private void storeTableHead(Iterator data) throws IOException {
-        out.write("<tr>\n");
+        out.write("<tr>");
         while (data.hasNext()) {
             Object datum = data.next();
             out.write("<th>" + datum.toString() + "</th>");
-            out.write("\n");
+            out.write("");
         }
         out.write("</tr>");
     }
