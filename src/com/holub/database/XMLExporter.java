@@ -5,34 +5,44 @@ import java.util.*;
 
 public class XMLExporter implements Table.Exporter {
 	private final Writer out;
-	private 	  int	 width;
+	private String tableName;
+	private ArrayList<String> columnNames = new ArrayList<>();
+	private int width;
 
 	public XMLExporter( Writer out ){
 		this.out = out;
 	}
+	public void startTable() throws IOException {
+		out.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
+		out.write("\n");
+	}
 	public void storeMetadata( String tableName,int width,int height,Iterator columnNames ) throws IOException {
 		this.width = width;
-		out.write("<title>" + tableName + "</title>");
-		out.write("<columnNames>");
-		while( columnNames.hasNext() )
-			out.write("<columnName>" + columnNames.next() + "</columnName>");
-		out.write("</columnNames>");
-
+		this.tableName = tableName;
+		while(columnNames.hasNext()) {
+			this.columnNames.add(columnNames.next().toString());
+		}
+		out.write("<" + this.tableName + ">");
 	}
 	public void storeRow( Iterator data ) throws IOException {
+		Iterator columnList = columnNames.iterator();
 		out.write("<row>");
-		for( int i = 0; i < width; ++i ) {
+
+		while(data.hasNext() && columnList.hasNext()) {
 			Object datum = data.next();
-			if( datum != null )
-				out.write("<data>" + datum.toString() + "</data>");
+			Object colum = columnList.next();
+
+			if (colum != null && datum != null) {
+				out.write("<" + colum + ">");
+				out.write(datum.toString());
+				out.write("</" + colum + ">");
+			}
 		}
 		out.write("</row>");
 	}
-	public void startTable() throws IOException {
-		out.write("<root>");
-	}
+
 	public void endTable()   throws IOException {
-		out.write("</root>");
+		out.write("</" + tableName + ">");
 		out.close();
 	}
 }
