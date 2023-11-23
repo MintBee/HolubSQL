@@ -20,7 +20,7 @@ public class ConsistentDispatcher implements AppTime {
     public void becomeTomorrow() {
         currentDate = currentDate.plusDays(1);
     }
-
+    
     @Override
     public LocalDate now() {
         return currentDate;
