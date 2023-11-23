@@ -443,34 +443,50 @@ import com.holub.tools.ArrayIterator;
 	/**
 	 * This version of select does a join
 	 */
-	public Table select(Selector where, String[] requestedColumns, // {=ConcreteTable.select.default}
-			Table[] otherTables) {
-		// If we're not doing a join, use the more efficient version
-		// of select().
+    public Table select(Selector where, String[] requestedColumns, // {=ConcreteTable.select.default}
+                        Table[] otherTables) {
+        // If we're not doing a join, use the more efficient version
+        // of select().
 
-		if (otherTables == null || otherTables.length == 0)
-			return select(where, requestedColumns);
+        if (otherTables == null || otherTables.length == 0)
+            return select(where, requestedColumns);
 
-		// Make the current table not be a special case by effectively
-		// prefixing it to the otherTables array.
+        // Make the current table not be a special case by effectively
+        // prefixing it to the otherTables array.
 
-		Table[] allTables = new Table[otherTables.length + 1];
-		allTables[0] = this;
-		System.arraycopy(otherTables, 0, allTables, 1, otherTables.length);
+        Table[] allTables = new Table[otherTables.length + 1];
+        allTables[0] = this;
+        System.arraycopy(otherTables, 0, allTables, 1, otherTables.length);
 
-		// Create places to hold the result of the join and to hold
-		// iterators for each table involved in the join.
+        // SELECT *
+        if (requestedColumns == null) {
+            requestedColumns = getAllColumnNames(allTables);
+        }
 
-		Table resultTable = new ConcreteTable(null, requestedColumns);
-		Cursor[] envelope = new Cursor[allTables.length];
+        // Create places to hold the result of the join and to hold
+        // iterators for each table involved in the join.
 
-		// Recursively compute the Cartesian product, adding to the
-		// resultTable all rows that the Selector approves
+        Table resultTable = new ConcreteTable(null, requestedColumns);
+        Cursor[] envelope = new Cursor[allTables.length];
 
-		selectFromCartesianProduct(0, where, requestedColumns, allTables, envelope, resultTable);
+        // Recursively compute the Cartesian product, adding to the
+        // resultTable all rows that the Selector approves
 
-		return new UnmodifiableTable(resultTable);
-	}
+        selectFromCartesianProduct(0, where, requestedColumns, allTables, envelope, resultTable);
+
+        return new UnmodifiableTable(resultTable);
+    }
+
+    private String[] getAllColumnNames(Table[] allTables) {
+        return Arrays.stream(allTables).flatMap(table -> {
+            Cursor cursor = table.rows();
+            List<String> columnNames = new ArrayList<>();
+            for (int i = 0; i < cursor.columnCount(); i++) {
+                columnNames.add(cursor.columnName(i));
+            }
+            return columnNames.stream();
+        }).distinct().toArray(String[]::new);
+    }
 
 	/**
 	 * Think of the Cartesian product as a kind of tree. That is given one table
