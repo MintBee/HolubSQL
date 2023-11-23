@@ -7,6 +7,10 @@ public final class ItemDto {
     private final int price;
     private final int quantity;
 
+    public ItemDto(String name, int price) {
+        this(name, price, 0);
+    }
+
     public ItemDto(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
