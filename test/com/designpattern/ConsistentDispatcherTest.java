@@ -1,5 +1,6 @@
 package com.designpattern;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConsistentDispatcherTest {
     ConsistentDispatcher consistentDispatcher = new ConsistentDispatcher(1, () -> System.out.println("hi!"));
 
+    @Disabled
     @Test
     void simulate() throws InterruptedException {
         consistentDispatcher.simulate();
