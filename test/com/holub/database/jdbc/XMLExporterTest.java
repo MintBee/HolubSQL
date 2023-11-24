@@ -33,7 +33,8 @@ public class XMLExporterTest {
 
         }
 //        XMLExporter테스트
-        assertThat(stringBuffer.toString()).isEqualTo("<root><title>people</title><columnNames><columnName>last</columnName><columnName>first</columnName><columnName>addrId</columnName></columnNames><row><data>Holub</data><data>Allen</data><data>1</data></row><row><data>Flintstone</data><data>Wilma</data><data>2</data></row><row><data>Flintstone</data><data>Fred</data><data>2</data></row></root>");
+        assertThat(stringBuffer.toString()).isEqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<people><row><last>Holub</last><first>Allen</first><addrId>1</addrId></row><row><last>Flintstone</last><first>Wilma</first><addrId>2</addrId></row><row><last>Flintstone</last><first>Fred</first><addrId>2</addrId></row></people>");
 
     }
 }
