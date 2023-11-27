@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * Simulator for time by day
  * Run certain task per set seconds after call simulate method
  */
-public class ConsistentDispatcher implements AppTime {
+public class TimeSimulator implements AppTime {
     private LocalDate currentDate = LocalDate.now();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final int secondsTakeForTomorrow;
@@ -19,7 +19,7 @@ public class ConsistentDispatcher implements AppTime {
      * Set periodic task to run per set seconds
      * @param periodicTask () -> System.out.prinlin("hi") then, print "hi" per secondsTakeForTomorrow.
      */
-    public ConsistentDispatcher(int secondsTakeForTomorrow, Runnable periodicTask) {
+    public TimeSimulator(int secondsTakeForTomorrow, Runnable periodicTask) {
         this.secondsTakeForTomorrow = secondsTakeForTomorrow;
         this.periodicTask = periodicTask;
     }

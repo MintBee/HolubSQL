@@ -1,8 +1,10 @@
-package com.designpattern;
+package com.designpattern.io.cli;
 
-import java.time.LocalDate;
+import com.designpattern.io.ItemDto;
+import com.designpattern.io.OutputBoundary;
+import com.designpattern.io.StockDto;
+
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class CLIOutputBoundary implements OutputBoundary {
     @Override

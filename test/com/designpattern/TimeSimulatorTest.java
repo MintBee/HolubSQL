@@ -1,0 +1,15 @@
+package com.designpattern;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+class TimeSimulatorTest {
+    TimeSimulator timeSimulator = new TimeSimulator(1, () -> System.out.println("hi!"));
+
+    @Disabled
+    @Test
+    void simulate() throws InterruptedException {
+        timeSimulator.simulate();
+        Thread.sleep(900000);
+    }
+}

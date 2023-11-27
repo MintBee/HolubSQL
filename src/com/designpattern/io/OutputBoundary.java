@@ -1,4 +1,4 @@
-package com.designpattern;
+package com.designpattern.io;
 
 public interface OutputBoundary {
     void outPutItemInfo(ItemDto item);

@@ -1,5 +1,7 @@
 package com.designpattern;
 
+import com.designpattern.io.InputBoundary;
+
 import java.time.LocalDate;
 
 public class Controller implements InputBoundary {

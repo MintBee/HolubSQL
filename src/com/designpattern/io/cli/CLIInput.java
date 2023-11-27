@@ -1,4 +1,6 @@
-package com.designpattern;
+package com.designpattern.io.cli;
+
+import com.designpattern.io.InputBoundary;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

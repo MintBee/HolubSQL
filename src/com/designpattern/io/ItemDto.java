@@ -1,4 +1,4 @@
-package com.designpattern;
+package com.designpattern.io;
 
 import java.util.Objects;
 
