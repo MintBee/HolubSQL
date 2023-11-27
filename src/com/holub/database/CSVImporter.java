@@ -101,5 +101,9 @@ public class CSVImporter implements Table.Importer
 		return row;
 	}
 
-	public void endTable() throws IOException {}
+	public void endTable() throws IOException {
+        if (in != null) {
+            in.close();
+        }
+    }
 }

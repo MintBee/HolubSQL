@@ -32,8 +32,8 @@ import java.io.*;
  * @include /etc/license.txt
  */
 
-public class TableFactory
-{	
+public class TableFactory {
+
 	/** Create an empty table with the specified columns.
 	 *  @param name	the table name
 	 *  @param columns names of all the columns
@@ -89,14 +89,16 @@ public class TableFactory
 	public static Table load( String name, File directory )
 													throws IOException
 	{
-		if( !(name.endsWith( ".csv" ) || name.endsWith( ".CSV" )) )
+		if( !(name.endsWith( "." + ioFactory.fileExtension() ) || name.endsWith( "." + ioFactory.fileExtension().toUpperCase() )) )
 			throw new java.io.IOException(
 					 "Filename (" +name+ ") does not end in "
-					+"supported extension (.csv)" );
-
-		Reader in = new FileReader( new File( directory, name ));
-		Table loaded = new ConcreteTable( new CSVImporter( in ));
-		in.close();
-		return loaded;
+					+"supported extension (."+ ioFactory.fileExtension() + ")" );
+        return new ConcreteTable(ioFactory.createImporter(new File( directory, name )));
 	}
+
+    private static IOFactory ioFactory = new CsvIOFactory();
+
+    public static void setIoFactory(IOFactory ioFactory) {
+        TableFactory.ioFactory = ioFactory;
+    }
 }
