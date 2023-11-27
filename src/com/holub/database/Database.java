@@ -257,11 +257,7 @@ a exception toss.
 
 public final class Database
 {
-    private static IOFactory ioFactory = new CsvIOFactory();
-
-    public static void setIoFactory(IOFactory ioFactory) {
-        Database.ioFactory = ioFactory;
-    }
+    private static final IOFactory ioFactory = IOFactoryRegistry.getInstance();
 
     /* The directory that represents the database.
 	 */
@@ -299,11 +295,7 @@ public final class Database
 	 */
 	private final class TableMap implements Map
 	{
-        private static IOFactory ioFactory = new CsvIOFactory();
-
-        public static void setIoFactory(IOFactory ioFactory) {
-            TableMap.ioFactory = ioFactory;
-        }
+        private static final IOFactory ioFactory = IOFactoryRegistry.getInstance();
 
         private final Map realMap;
 		public TableMap( Map realMap ){	this.realMap = realMap; }

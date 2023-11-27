@@ -96,9 +96,5 @@ public class TableFactory {
         return new ConcreteTable(ioFactory.createImporter(new File( directory, name )));
 	}
 
-    private static IOFactory ioFactory = new CsvIOFactory();
-
-    public static void setIoFactory(IOFactory ioFactory) {
-        TableFactory.ioFactory = ioFactory;
-    }
+    private static final IOFactory ioFactory = IOFactoryRegistry.getInstance();
 }
