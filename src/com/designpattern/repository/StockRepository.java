@@ -55,10 +55,6 @@ public class StockRepository extends DaoRepository<Stock> {
         }
     }
 
-    public List<Stock> findByAll() throws SQLException {
-        return findAllBy(getSelectAllQuery()).stream().toList();
-    }
-
     @Override
     protected String getSelectAllQuery() {
         return "SELECT * FROM stock;";

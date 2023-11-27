@@ -1,5 +1,6 @@
 package com.designpattern.model;
 
+import com.designpattern.repository.DaoRepository;
 import com.designpattern.repository.ProductRepository;
 import com.designpattern.repository.StockRepository;
 
@@ -12,13 +13,13 @@ import java.util.List;
 // TODO : DbSelectVisitor 구현된 코드에 대해 논의
 
 public class DbSelectVisitor{
-    private static final ProductRepository productRepository = new ProductRepository();
-    private static final StockRepository stockRepository = new StockRepository();
+    private static final DaoRepository<Product> productRepository = new ProductRepository();
+    private static final DaoRepository<Stock> stockRepository = new StockRepository();
 
     public List<Product> visitProduct() {
         List<Product> products;
         try {
-            products = productRepository.findByAll();
+            products = productRepository.findAll();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -29,7 +30,7 @@ public class DbSelectVisitor{
     public List<Stock> visitStock() {
         List<Stock> stocks;
         try {
-            stocks = stockRepository.findByAll();
+            stocks = stockRepository.findAll();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

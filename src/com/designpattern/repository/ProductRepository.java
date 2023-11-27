@@ -28,10 +28,6 @@ public class ProductRepository extends DaoRepository<Product> {
         return "INSERT INTO product (name, price) VALUES ('" + model.getName() + "', " + model.getPrice() + ");";
     }
 
-    public List<Product> findByAll() throws SQLException {
-        return findAllBy(getSelectAllQuery()).stream().toList();
-    }
-
     @Override
     protected String getSelectAllQuery() {
         return "SELECT * FROM product;";
