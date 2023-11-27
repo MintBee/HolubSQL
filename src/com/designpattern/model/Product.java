@@ -28,15 +28,11 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (price != product.price) return false;
         return name.equals(product.name);
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + (int) (price ^ (price >>> 32));
-        return result;
+        return name.hashCode();
     }
-
 }
