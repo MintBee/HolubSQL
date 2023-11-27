@@ -60,7 +60,7 @@ import com.holub.tools.ThrowableContainer;
  *	"USE DATABASE foo" will create a subdirectory called "foo" in
  *	the current directory. Use a full path name to get something
  *	else: "USE DATABASE c:/tmp/foo"
- *	See {@link CSVExporter} for a description of the file format.
+ *	See {@link CSVExporter} or {@link XMLExporter} for a description of the file format.
  *	<p>
  *	Because database names are path names, identifier names in general
  *	can contain characters that would normally go in a path
@@ -256,7 +256,10 @@ a exception toss.
  */
 
 public final class Database
-{	/* The directory that represents the database.
+{
+    private static final IOFactory ioFactory = IOFactoryRegistry.getInstance();
+
+    /* The directory that represents the database.
 	 */
 	private File 	  location     = new File(".");
 
@@ -291,8 +294,10 @@ public final class Database
 	 *  from the disk.
 	 */
 	private final class TableMap implements Map
-	{ 		
-		private final Map realMap;
+	{
+        private static final IOFactory ioFactory = IOFactoryRegistry.getInstance();
+
+        private final Map realMap;
 		public TableMap( Map realMap ){	this.realMap = realMap; }
 
 		/** If the requested table is already in memory, return it.
@@ -304,7 +309,7 @@ public final class Database
 			{	Table desiredTable = (Table) realMap.get(tableName);
 				if( desiredTable == null )
 				{	desiredTable = TableFactory.load(
-									tableName + ".csv",location);
+									tableName + "." + ioFactory.fileExtension(),location);
 					put(tableName, desiredTable);
 				}
 				return desiredTable;
@@ -567,8 +572,9 @@ public final class Database
 	 *  again unless they are modified after the current dump()
 	 *  call. Nothing happens if no tables are dirty.
 	 *  <p>
-	 *  The present implemenation flushes to a .csv file whose name
+	 *  By default, the present implemenation flushes to a .csv file whose name
 	 *  is the table name with a ".csv" extension added.
+     *  Or else, it is exported to set io extension.
 	 */
 	public void dump() throws IOException
 	{	Collection values = tables.values();
@@ -576,11 +582,8 @@ public final class Database
 		{	for( Iterator i = values.iterator(); i.hasNext(); )
 			{	Table current = (Table ) i.next();
 				if( current.isDirty() )
-				{	Writer out =
-						new FileWriter(
-								new File(location, current.name() + ".csv"));
-					current.export( new CSVExporter(out) );
-					out.close();
+				{
+					current.export(ioFactory.createExporter(new File(location, current.name() + "." + ioFactory.fileExtension())) );
 				}
 			}
 		}
