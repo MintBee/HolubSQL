@@ -27,9 +27,9 @@ public class DecayingChecker extends Observable {
         LocalDate now = timeSimulator.now();
 
         for (Stock stock : decayingStocks) {
-            if(stock instanceof DecayingStock){
-                if(((DecayingStock) stock).getExpirationDate().isAfter(now)){
-                    ((DecayingStock) stock).setIsDecayed(true);
+            if(stock instanceof DecayingStock decayingStock){
+                if(decayingStock.getExpirationDate().isAfter(now)){
+                    decayingStock.setIsDecayed(true);
                 }
             }
         }
