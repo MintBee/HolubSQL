@@ -8,42 +8,30 @@ import java.util.*;
 
 public class Inventory {
     HashMap<Product, List<Stock>> inven;
-    Iterator<Map.Entry<Product, List<Stock>>> iter = inven.entrySet().iterator();
     DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
     DbInsertVisitor insertVisitor = new DbInsertVisitor();
 
 
     public void addStock(String name, int count){
-        Product comp = new Product(name, 0);
-        while(iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                for(int i = 0; i<count; i++){
-                    Stock newStock = new UndecayingStock(name);
-                    entry.getValue().add(newStock);
-                    newStock.accept(insertVisitor);
-                }
-            }
-        }
+        Product keyProduct = new Product(name, 0);
+        Stock newStock = new UndecayingStock(name);
+        inven.get(keyProduct).add(newStock);
+        newStock.accept(insertVisitor);
     }
 
     public void addStock(String name, int count, LocalDate expDate){
-        Product comp = new Product(name, 0);
-        while(iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                    Stock newStock = new DecayingStock(name, expDate);
-                    entry.getValue().add(newStock);
-                    newStock.accept(insertVisitor);
-                    Collections.sort(entry.getValue(), new Comparator<Stock>() {
-                        @Override
-                        public int compare(Stock o1, Stock o2) {
-                            return o1.getExpirationDate().compareTo(o2.getExpirationDate());
-                        }
-                    });
+        Product keyProduct = new Product(name, 0);
+        Stock newStock = new DecayingStock(name, expDate);
+        inven.get(keyProduct).add(newStock);
+        newStock.accept(insertVisitor);
+        Collections.sort(inven.get(keyProduct), new Comparator<Stock>() {
+            @Override
+            public int compare(Stock o1, Stock o2) {
+                return o1.getExpirationDate().compareTo(o2.getExpirationDate());
             }
-        }
+        });
     }
+
 
 
     public void addProduct(String name, long price){
@@ -54,39 +42,29 @@ public class Inventory {
     }
 
     public void removeProduct(String name){
-        Product comp = new Product(name, 0);
-        while(iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                entry.getKey().accept(deleteVisitor);
-                iter.remove();
-            }
-        }
-
+        Product keyProduct = new Product(name, 0);
+        keyProduct.accept(deleteVisitor);
+        inven.remove(keyProduct);
     }
 
-    public List<Stock> findProduct(String name){
+    public Product findProduct(String name){
         Product comp = new Product(name, 0);
-        List<Stock> result = new ArrayList<Stock>();
-        while(iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                result = entry.getValue();
-            }
-        }
-        return result;
+        Product keyProduct = inven.entrySet().stream()
+                .filter(entry->entry.getKey().equals(comp))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElseThrow(()->new NoSuchProductException());
+
+        return keyProduct;
     }
 
     public void sell(String name, int count){
-        Product comp = new Product(name, 0);
-        while (iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                for(int i =0; i<count; i++){
-                    entry.getValue().get(i).accept(deleteVisitor);
-                    entry.getValue().remove(i);
-                }
-            }
+        Product keyProduct = new Product(name, 0);
+        List<Stock> stocks = inven.get(keyProduct);
+
+        for(int i =0; i<stocks.size(); i++){
+            stocks.get(i).accept(deleteVisitor);
+            stocks.remove(i);
         }
     }
 }
