@@ -12,6 +12,8 @@ public class Inventory {
     DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
     DbInsertVisitor insertVisitor = new DbInsertVisitor();
 
+    DbSelectVisitor selectVisitor = new DbSelectVisitor();
+
 
     public void addStock(String name, int count){
         Product comp = new Product(name, 0);

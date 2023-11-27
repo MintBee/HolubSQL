@@ -5,6 +5,7 @@ import com.designpattern.model.Product;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ProductRepository extends DaoRepository<Product> {
     public Product findByName(String name) throws SQLException {
@@ -25,6 +26,10 @@ public class ProductRepository extends DaoRepository<Product> {
     @Override
     protected String getInsertQuery(Product model) {
         return "INSERT INTO product (name, price) VALUES ('" + model.getName() + "', " + model.getPrice() + ");";
+    }
+
+    public List<Product> findByAll() throws SQLException {
+        return findAllBy(getSelectAllQuery()).stream().toList();
     }
 
     @Override
