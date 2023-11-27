@@ -1,8 +1,11 @@
 package com.designpattern.repository;
 
+import com.designpattern.model.Stock;
+
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DaoRepository<T> {
@@ -38,15 +41,25 @@ public abstract class DaoRepository<T> {
 
     protected List<T> findAllBy(String selectQuery) throws SQLException {
         try (Connection connection = getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(selectQuery);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(selectQuery)) {
             return mapToModelList(resultSet);
         }
     }
 
     protected abstract String getSelectAllQuery();
 
-    protected abstract List<T> mapToModelList(ResultSet resultSet);
+    protected List<T> mapToModelList(ResultSet resultSet) {
+        List<T> models = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                models.add(mapToModel(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return models;
+    }
 
     protected void deleteAllBy(String deleteQuery) throws SQLException {
         try (Connection connection = getConnection();

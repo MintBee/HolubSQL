@@ -35,19 +35,6 @@ public class ProductRepository extends DaoRepository<Product> {
     }
 
     @Override
-    protected List<Product> mapToModelList(ResultSet resultSet) {
-        List<Product> products = new ArrayList<>();
-        try {
-            while (resultSet.next()) {
-                products.add(mapToModel(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return products;
-    }
-
-    @Override
     protected Product mapToModel(ResultSet resultSet) throws SQLException {
         return new Product(resultSet.getString("name"), resultSet.getLong("price"));
     }

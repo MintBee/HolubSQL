@@ -4,9 +4,11 @@ import com.designpattern.exception.NoSuchProductException;
 import com.designpattern.model.DecayingStock;
 import com.designpattern.model.Product;
 import com.designpattern.model.Stock;
+import com.designpattern.model.UndecayingStock;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StockRepository extends DaoRepository<Stock> {
@@ -47,16 +49,15 @@ public class StockRepository extends DaoRepository<Stock> {
 
     @Override
     protected String getSelectAllQuery() {
-        //todo
-    }
-
-    @Override
-    protected List<Stock> mapToModelList(ResultSet resultSet) {
-        //todo
+        return "SELECT * FROM stock;";
     }
 
     @Override
     protected Stock mapToModel(ResultSet resultSet) throws SQLException {
-        //todo
+        if (resultSet.getString("expiration_date") == null) {
+            return new UndecayingStock(resultSet.getString("product_name"));
+        } else {
+            return new DecayingStock(resultSet.getString("product_name"), resultSet.getDate("expiration_date").toLocalDate());
+        }
     }
 }
