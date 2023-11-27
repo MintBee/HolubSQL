@@ -21,40 +21,44 @@ public class TestController implements InputBoundary {
     }
 
     @Override
-    public void addNewItem(String name, int price) {
-        items.add(new ItemDto(name, price));
+    public void addNewProduct(String productName, int price) {
+        items.add(new ItemDto(productName, price));
     }
 
     @Override
-    public void addStock(String name, int count) {
-        ItemDto item = items.stream().filter(it -> it.getName().equals(name))
+    public void removeProduct(String productName) {
+        items.remove(0);
+    }
+
+    @Override
+    public void addStock(String productName, int count) {
+        ItemDto item = items.stream().filter(it -> it.getName().equals(productName))
             .findFirst()
             .orElseThrow(NoSuchElementException::new);
         for (int i = 0; i < count; i++) {
-            stocks.add(new StockDto(name, item.getPrice()));
+            stocks.add(new StockDto(productName, item.getPrice()));
         }
     }
 
     @Override
-    public void addStock(String name, int count, LocalDate expirationDate) {
-        ItemDto item = items.stream().filter(it -> it.getName().equals(name))
+    public void addStock(String productName, int count, LocalDate expirationDate) {
+        ItemDto item = items.stream().filter(it -> it.getName().equals(productName))
             .findFirst()
             .orElseThrow(NoSuchElementException::new);
 
         for (int i = 0; i < count; i++) {
-            stocks.add(new StockDto(name, item.getPrice(), expirationDate));
+            stocks.add(new StockDto(productName, item.getPrice(), expirationDate));
         }
     }
 
     @Override
-    public void removeStock(String name, int count) {
-        Stream<StockDto> toRemoveStocks = stocks.stream().filter(it -> it.getName().equals(name));
-        toRemoveStocks.forEach(stocks::remove);
+    public void sellStock(String productName) {
+
     }
 
     @Override
-    public void requestItemInfo(String name) {
-        ItemDto itemDto = items.stream().filter(it -> it.getName().equals(name)).findFirst()
+    public void requestProductInfo(String productName) {
+        ItemDto itemDto = items.stream().filter(it -> it.getName().equals(productName)).findFirst()
             .orElseThrow(NoSuchElementException::new);
         outputBoundary.outPutItemInfo(itemDto);
         stocks.stream().filter((it) -> it.getName().equals(itemDto.getName()))

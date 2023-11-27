@@ -44,7 +44,7 @@ public class CLIInput {
                         System.out.println("품목의 가격을 입력해 주세요.");
                         int itemPrice = Integer.parseInt(this.getUserInput());
 
-                        this.inputBoundary.addNewItem(itemName, itemPrice);
+                        this.inputBoundary.addNewProduct(itemName, itemPrice);
                     } catch(NumberFormatException e) {
                         System.out.println("가격은 숫자로 입력해 주세요");
                     }
@@ -101,7 +101,7 @@ public class CLIInput {
                         System.out.println("출고할 개수를 입력해 주세요.");
                         int stockCount = Integer.parseInt(this.getUserInput());
 
-                        this.inputBoundary.removeStock(stockName, stockCount);
+                        this.inputBoundary.sellStocks(stockName, stockCount);
 
                     } catch(NoSuchElementException e) {
                         System.out.println("일치하는 상품이 없습니다.");
@@ -117,7 +117,7 @@ public class CLIInput {
                         System.out.println("상품의 이름을 입력해 주세요.");
                         String stockName = this.getUserInput();
 
-                        this.inputBoundary.requestItemInfo(stockName);
+                        this.inputBoundary.requestProductInfo(stockName);
 
                     } catch(NoSuchElementException e) {
                         System.out.println("일치하는 상품이 없습니다.");
