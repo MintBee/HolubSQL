@@ -6,6 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Template class for Repository classes
+ * @param <T> type of model class
+ */
 public abstract class DaoRepository<T> {
     private static final String DB_PATH = Paths.get(".").toUri().getPath();
     private static final String DRIVER_NAME = "com.holub.database.jdbc.JDBCDriver";
