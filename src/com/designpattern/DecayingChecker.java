@@ -1,26 +1,25 @@
 package com.designpattern;
 
-import com.designpattern.model.DbDeleteVisitor;
 import com.designpattern.model.DbSelectVisitor;
 import com.designpattern.model.DecayingStock;
 import com.designpattern.model.Stock;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Observable;
 
-public class DecayingChecker {
+public class DecayingChecker extends Observable {
     private final TimeSimulator timeSimulator;
     private final DbSelectVisitor dbSelectVisitor;
-    private final DbDeleteVisitor dbDeleteVisitor;
 
-
-    public DecayingChecker(
-            DbSelectVisitor dbSelectVisitor,
-            DbDeleteVisitor dbDeleteVisitor
-    ){
+    public DecayingChecker(DbSelectVisitor dbSelectVisitor){
         this.timeSimulator = new TimeSimulator(1000, this::checkDecayingStocks);
         this.dbSelectVisitor = dbSelectVisitor;
-        this.dbDeleteVisitor = dbDeleteVisitor;
+    }
+
+    public void notifyDataSetChanged(){
+        setChanged();
+        notifyObservers();
     }
 
     private void checkDecayingStocks(){
@@ -30,9 +29,10 @@ public class DecayingChecker {
         for (Stock stock : decayingStocks) {
             if(stock instanceof DecayingStock){
                 if(((DecayingStock) stock).getExpirationDate().isAfter(now)){
-                    dbDeleteVisitor.visit(stock);
+                    ((DecayingStock) stock).setIsDecayed(true);
                 }
             }
         }
+        notifyDataSetChanged();
     }
 }

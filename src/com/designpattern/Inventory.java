@@ -6,14 +6,25 @@ import com.designpattern.model.*;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Inventory {
+public class Inventory implements Observer {
     HashMap<Product, List<Stock>> inven;
     Iterator<Map.Entry<Product, List<Stock>>> iter = inven.entrySet().iterator();
     DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
     DbInsertVisitor insertVisitor = new DbInsertVisitor();
-
     DbSelectVisitor selectVisitor = new DbSelectVisitor();
 
+    public Inventory(Observable observable){
+        observable.addObserver(this);
+    }
+    @Override
+    public void update(Observable observable, Object arg){
+        List<Stock> stocks = selectVisitor.visitStock();
+        for (Stock stock : stocks) {
+            if(stock instanceof DecayingStock){
+                decayingStock((DecayingStock) stock);
+            }
+        }
+    }
 
     public void addStock(String name, int count){
         Product comp = new Product(name, 0);
@@ -89,6 +100,12 @@ public class Inventory {
                     entry.getValue().remove(i);
                 }
             }
+        }
+    }
+
+    public void decayingStock(DecayingStock stock){
+        if(stock.getIsDecayed()){
+            // DB에서 삭제
         }
     }
 }
