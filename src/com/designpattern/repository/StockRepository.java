@@ -8,7 +8,7 @@ import com.designpattern.model.UndecayingStock;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 public class StockRepository extends DaoRepository<Stock> {
@@ -28,9 +28,9 @@ public class StockRepository extends DaoRepository<Stock> {
         }
     }
 
-    public void deleteByExpirationDate(DecayingStock decayingStock) {
+    public void deleteByExpirationDate(LocalDate expirationDate) {
         try {
-            deleteAllBy("DELETE FROM stock WHERE expiration_date = '" + decayingStock.getExpirationDate() + "';");
+            deleteAllBy("DELETE FROM stock WHERE expiration_date = '" + expirationDate + "';");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

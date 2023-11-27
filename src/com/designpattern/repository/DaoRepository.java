@@ -1,7 +1,5 @@
 package com.designpattern.repository;
 
-import com.designpattern.model.Stock;
-
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
 import java.sql.*;
