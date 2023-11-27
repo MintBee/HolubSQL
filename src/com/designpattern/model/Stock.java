@@ -13,7 +13,15 @@ public abstract class Stock {
         this(null, productName);
     }
 
+    Long getId() {
+        return id;
+    }
+
     public String getProductName() {
         return productName;
+    }
+
+    public void accept(ModelVisitor visitor) {
+        visitor.visit(this);
     }
 }

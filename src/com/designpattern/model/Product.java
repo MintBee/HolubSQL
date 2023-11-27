@@ -9,6 +9,10 @@ public class Product {
         this.price = price;
     }
 
+    public void accept(ModelVisitor visitor) {
+        visitor.visit(this);
+    }
+
     public String getName() {
         return name;
     }
@@ -34,4 +38,5 @@ public class Product {
         result = 31 * result + (int) (price ^ (price >>> 32));
         return result;
     }
+
 }

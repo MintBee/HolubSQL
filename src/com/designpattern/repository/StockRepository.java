@@ -16,7 +16,15 @@ public class StockRepository extends DaoRepository<Stock> {
         try {
             return findAllBy("SELECT * FROM stock WHERE product_name = '" + product.getName() + "';");
         } catch (SQLException e) {
-            throw new NoSuchProductException();
+            throw new NoSuchProductException(e);
+        }
+    }
+
+    public void delete(long id) {
+        try {
+            deleteAllBy("DELETE FROM stock WHERE id = " + id + ";");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -24,7 +32,7 @@ public class StockRepository extends DaoRepository<Stock> {
         try {
             deleteAllBy("DELETE FROM stock WHERE product_name = '" + name + "';");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new NoSuchProductException(e);
         }
     }
 
@@ -32,7 +40,7 @@ public class StockRepository extends DaoRepository<Stock> {
         try {
             deleteAllBy("DELETE FROM stock WHERE expiration_date = '" + expirationDate + "';");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new NoSuchProductException(e);
         }
     }
 
