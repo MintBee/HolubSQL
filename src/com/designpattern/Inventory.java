@@ -4,67 +4,85 @@ import com.designpattern.exception.NoSuchProductException;
 import com.designpattern.model.*;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Inventory {
-    HashMap<Product, List<Stock>> inven;
+    private final Map<Product, List<Stock>> inven = new ConcurrentHashMap<>();
     DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
     DbInsertVisitor insertVisitor = new DbInsertVisitor();
 
-
-    public void addStock(String name, int count){
-        Product keyProduct = new Product(name, 0);
-        Stock newStock = new UndecayingStock(name);
-        inven.get(keyProduct).add(newStock);
-        newStock.accept(insertVisitor);
+    public void addStock(String productName, int count){
+        Product keyProduct = new Product(productName, 0);
+        List<Stock> stocks = inven.get(keyProduct);
+        if (stocks == null) {
+            throw new NoSuchProductException();
+        }
+        for (int i = 0; i < count; i++) {
+            Stock newStock = new UndecayingStock(productName);
+            inven.get(keyProduct).add(newStock);
+            newStock.accept(insertVisitor);
+        }
     }
 
-    public void addStock(String name, int count, LocalDate expDate){
-        Product keyProduct = new Product(name, 0);
-        Stock newStock = new DecayingStock(name, expDate);
-        inven.get(keyProduct).add(newStock);
-        newStock.accept(insertVisitor);
-        Collections.sort(inven.get(keyProduct), new Comparator<Stock>() {
-            @Override
-            public int compare(Stock o1, Stock o2) {
-                return o1.getExpirationDate().compareTo(o2.getExpirationDate());
-            }
-        });
+    public void addStock(String productName, int count, LocalDate expDate){
+        Product keyProduct = new Product(productName, 0);
+        List<Stock> stocks = inven.get(keyProduct);
+        if (stocks == null) {
+            throw new NoSuchProductException();
+        }
+        for (int i = 0; i < count; i++) {
+            Stock newStock = new DecayingStock(productName, expDate);
+            inven.get(keyProduct).add(newStock);
+            newStock.accept(insertVisitor);
+        }
     }
 
+    public void removeStock(Stock stock) {
+        List<Stock> stocks = inven.get(new Product(stock.getProductName(), 0));
+        stocks.remove(stock);
+        stock.accept(deleteVisitor);
+    }
 
-
-    public void addProduct(String name, long price){
-        Product newProduct = new Product(name, price);
-        List<Stock> stockList = new ArrayList<Stock>();
+    public void addProduct(String productName, long price){
+        Product newProduct = new Product(productName, price);
+        List<Stock> stockList = new ArrayList<>();
         inven.put(newProduct, stockList);
         newProduct.accept(insertVisitor);
     }
 
-    public void removeProduct(String name){
-        Product keyProduct = new Product(name, 0);
+    public void removeProduct(String productName){
+        Product keyProduct = new Product(productName, 0);
         keyProduct.accept(deleteVisitor);
         inven.remove(keyProduct);
     }
 
     public Product findProduct(String name){
         Product comp = new Product(name, 0);
-        Product keyProduct = inven.entrySet().stream()
-                .filter(entry->entry.getKey().equals(comp))
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .orElseThrow(()->new NoSuchProductException());
 
-        return keyProduct;
+        return inven.keySet().stream()
+                .filter(stocks -> stocks.equals(comp))
+                .findFirst()
+                .orElseThrow(NoSuchProductException::new);
     }
 
-    public void sell(String name, int count){
-        Product keyProduct = new Product(name, 0);
-        List<Stock> stocks = inven.get(keyProduct);
+    public void sell(String productName, int count) {
+        for (int i = 0; i < count ; i++) {
+            sell(productName);
+        }
+    }
 
-        for(int i =0; i<stocks.size(); i++){
-            stocks.get(i).accept(deleteVisitor);
-            stocks.remove(i);
+    private void sell(String productName) {
+        synchronized (inven) {
+            Product comp = new Product(productName, 0);
+            List<Stock> productStocks = inven.getOrDefault(comp, new ArrayList<>());
+            Stock stockToSell = productStocks
+                .stream().findFirst()
+                .orElseThrow(NoSuchProductException::new);
+            productStocks.remove(stockToSell);
+            stockToSell.accept(new DbDeleteVisitor());
         }
     }
 }
