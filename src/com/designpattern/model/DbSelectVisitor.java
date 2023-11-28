@@ -16,7 +16,7 @@ public class DbSelectVisitor{
     private static final DaoRepository<Product> productRepository = new ProductRepository();
     private static final DaoRepository<Stock> stockRepository = new StockRepository();
 
-    public List<Product> visitProduct() {
+    public static List<Product> visitProduct() {
         List<Product> products;
         try {
             products = productRepository.findAll();
@@ -27,7 +27,7 @@ public class DbSelectVisitor{
         return products;
     }
 
-    public List<Stock> visitStock() {
+    public static List<Stock> visitStock() {
         List<Stock> stocks;
         try {
             stocks = stockRepository.findAll();
