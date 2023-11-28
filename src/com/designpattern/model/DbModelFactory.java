@@ -12,11 +12,11 @@ import java.util.List;
 // 기존 코드와 통일성을 유지하기 위해 DB에서 가져오는 부분은 동일한 형식을 가지도록 작성했습니다.
 // TODO : DbSelectVisitor 구현된 코드에 대해 논의
 
-public class DbSelectVisitor{
+public class DbModelFactory {
     private static final DaoRepository<Product> productRepository = new ProductRepository();
     private static final DaoRepository<Stock> stockRepository = new StockRepository();
 
-    public static List<Product> visitProduct() {
+    public static List<Product> getAllProducts() {
         List<Product> products;
         try {
             products = productRepository.findAll();
@@ -27,7 +27,7 @@ public class DbSelectVisitor{
         return products;
     }
 
-    public static List<Stock> visitStock() {
+    public static List<Stock> getAllStocks() {
         List<Stock> stocks;
         try {
             stocks = stockRepository.findAll();

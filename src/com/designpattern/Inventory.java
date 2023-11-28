@@ -1,6 +1,5 @@
 package com.designpattern;
 
-import com.designpattern.exception.NoSuchProductException;
 import com.designpattern.model.*;
 
 import java.time.LocalDate;
@@ -11,14 +10,14 @@ public class Inventory implements Observer {
     Iterator<Map.Entry<Product, List<Stock>>> iter = inven.entrySet().iterator();
     DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
     DbInsertVisitor insertVisitor = new DbInsertVisitor();
-    DbSelectVisitor selectVisitor = new DbSelectVisitor();
+    DbModelFactory selectVisitor = new DbModelFactory();
 
     public Inventory(Observable observable){
         observable.addObserver(this);
     }
     @Override
     public void update(Observable observable, Object arg){
-        List<Stock> stocks = selectVisitor.visitStock();
+        List<Stock> stocks = selectVisitor.getAllStocks();
         for (Stock stock : stocks) {
             if(stock instanceof DecayingStock){
                 decayingStock((DecayingStock) stock);
