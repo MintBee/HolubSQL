@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-11-27T08:14:18.910Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="XLbK_u_6LiU3B26GV_lS" version="22.1.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-28T11:45:10.928Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="GbemZTdRO87vN5S8nF0k" version="22.1.4" type="github">
   <diagram name="페이지-1" id="swf9oH_p4NhBDtIORgDr">
-    <mxGraphModel dx="819" dy="433" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="989" dy="523" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -14,13 +14,13 @@
           <mxGeometry x="200" y="260" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-62" value="품목 등록" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="200" y="389.67" width="120" height="50" as="geometry" />
+          <mxGeometry x="200" y="410" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-63" value="품목 삭제" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="200" y="490" width="120" height="50" as="geometry" />
+          <mxGeometry x="200" y="510.33000000000004" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-64" value="재고 폐기" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="200" y="620" width="120" height="50" as="geometry" />
+          <mxGeometry x="200" y="640.33" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-65" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="-4_ChcX-0KMpGzD27Wn_-59" target="-4_ChcX-0KMpGzD27Wn_-60" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -65,43 +65,46 @@
           <mxGeometry x="340" y="189.5" width="170" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-77" value="1. 재입고할 품목 입력" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="340" y="239.33" width="150" height="30" as="geometry" />
+          <mxGeometry x="340" y="230" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-79" value="1-a. 해당 품목이 없다면 품목등록요청 알림" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="350" y="270" width="250" height="30" as="geometry" />
+          <mxGeometry x="350" y="260.67" width="250" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-81" value="2. 입고 개수 입력" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="340" y="299.33" width="150" height="30" as="geometry" />
+          <mxGeometry x="340" y="290" width="150" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="-4_ChcX-0KMpGzD27Wn_-83" value="3. 재고 가산 후 현재 재고 출력" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="340" y="329.33" width="170" height="30" as="geometry" />
+        <mxCell id="-4_ChcX-0KMpGzD27Wn_-83" value="3. 폐기날짜가 있다면 폐기날짜 입력" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="340" y="320" width="240" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-85" value="1. 등록할 품목 입력" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="340" y="369.67" width="150" height="30" as="geometry" />
+          <mxGeometry x="340" y="390" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-87" value="2. 품목 정상 등록 알림" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="340" y="430" width="170" height="30" as="geometry" />
+          <mxGeometry x="340" y="450.33" width="170" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-89" value="1-a. 해당 품목이 있다면 중복 품목 알림" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="350" y="399.99999999999994" width="250" height="30" as="geometry" />
+          <mxGeometry x="350" y="420.3299999999999" width="250" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-91" value="1. 삭제할 품목 입력" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="340" y="479.11" width="150" height="30" as="geometry" />
+          <mxGeometry x="340" y="499.44000000000005" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-93" value="2. 품목 삭제 후 삭제 알림" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="340" y="539.44" width="170" height="30" as="geometry" />
+          <mxGeometry x="340" y="559.7700000000001" width="170" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-94" value="1-a. 해당 품목이 없다면 대상 품목 없음 알림" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="350" y="509.43999999999994" width="250" height="30" as="geometry" />
+          <mxGeometry x="350" y="529.77" width="250" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-96" value="2-a. 해당 품목에 남은 재고가 있다면 자동 폐기" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="350" y="569.9999999999999" width="250" height="30" as="geometry" />
+          <mxGeometry x="350" y="590.3299999999999" width="250" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-98" value="1. 일정 시간마다 모든 &lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Decaying 재고 유통기한 확인" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="340" y="615" width="229" height="30" as="geometry" />
+          <mxGeometry x="340" y="635.33" width="229" height="30" as="geometry" />
         </mxCell>
         <mxCell id="-4_ChcX-0KMpGzD27Wn_-99" value="2. 현재 시각과 비교 후 유통기한이 지났다면&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;시스템에 폐기 요청" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="340" y="660" width="270" height="30" as="geometry" />
+          <mxGeometry x="340" y="680.33" width="270" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="gzHBgoI466QoZVbn0Fpu-2" value="4. 재고 가산 후 현재 재고 출력" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="350" width="170" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
