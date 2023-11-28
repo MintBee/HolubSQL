@@ -1,14 +1,14 @@
 package com.designpattern.io.cli;
 
-import com.designpattern.io.ItemDto;
 import com.designpattern.io.OutputBoundary;
+import com.designpattern.io.ProductDto;
 import com.designpattern.io.StockDto;
 
 import java.time.format.DateTimeFormatter;
 
 public class CLIOutputBoundary implements OutputBoundary {
     @Override
-    public void outPutItemInfo(ItemDto item) {
+    public void outputProduct(ProductDto item) {
         String name = item.getName();
         String price = Integer.toString(item.getPrice());
         String quantity = Integer.toString(item.getQuantity());

@@ -2,16 +2,16 @@ package com.designpattern.io;
 
 import java.util.Objects;
 
-public final class ItemDto {
+public final class ProductDto {
     private final String name;
     private final int price;
     private final int quantity;
 
-    public ItemDto(String name, int price) {
+    public ProductDto(String name, int price) {
         this(name, price, 0);
     }
 
-    public ItemDto(String name, int price, int quantity) {
+    public ProductDto(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -33,7 +33,7 @@ public final class ItemDto {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (ItemDto) obj;
+        var that = (ProductDto) obj;
         return Objects.equals(this.name, that.name) &&
             this.price == that.price &&
             this.quantity == that.quantity;

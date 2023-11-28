@@ -9,5 +9,5 @@ public interface InputBoundary {
     void addStock(String productName, int count, LocalDate expirationDate);
     void sellStock(String productName);
     void sellStocks(String productName, int count);
-    void requestProductInfo(String productName);
+    void requestProduct(String productName);
 }
