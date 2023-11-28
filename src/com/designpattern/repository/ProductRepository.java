@@ -5,6 +5,7 @@ import com.designpattern.model.Product;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ProductRepository extends DaoRepository<Product> {
     public Product findByName(String name) throws SQLException {

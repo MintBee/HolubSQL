@@ -1,6 +1,7 @@
 package com.designpattern;
 
 import java.time.LocalDate;
+import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -9,19 +10,17 @@ import java.util.concurrent.TimeUnit;
  * Simulator for time by day
  * Run certain task per set seconds after call simulate method
  */
-public class TimeSimulator implements AppTime {
+public class TimeSimulator extends Observable implements AppTime {
     private LocalDate currentDate = LocalDate.now();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final int secondsTakeForTomorrow;
-    private final Runnable periodicTask;
 
     /**
      * Set periodic task to run per set seconds
-     * @param periodicTask () -> System.out.prinlin("hi") then, print "hi" per secondsTakeForTomorrow.
+     *
      */
-    public TimeSimulator(int secondsTakeForTomorrow, Runnable periodicTask) {
+    public TimeSimulator(int secondsTakeForTomorrow) {
         this.secondsTakeForTomorrow = secondsTakeForTomorrow;
-        this.periodicTask = periodicTask;
     }
 
     @Override
@@ -39,7 +38,8 @@ public class TimeSimulator implements AppTime {
             while (true) {
                 try {
                     TimeUnit.SECONDS.sleep(secondsTakeForTomorrow);
-                    periodicTask.run();
+                    becomeTomorrow();
+                    notifyObservers();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
