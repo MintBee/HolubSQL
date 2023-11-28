@@ -22,7 +22,7 @@ public class CLIOutputBoundary implements OutputBoundary {
     }
 
     @Override
-    public void outputStockInfo(StockDto stock) {
+    public void outputStock(StockDto stock) {
         String name = stock.getName();
         String price = Integer.toString(stock.getPrice());
         if (stock.expirationDate() == null) {

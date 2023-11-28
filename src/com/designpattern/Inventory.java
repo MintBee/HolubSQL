@@ -14,7 +14,7 @@ public class Inventory {
     DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
     DbInsertVisitor insertVisitor = new DbInsertVisitor();
 
-    public void addStock(String productName, int count){
+    public List<Stock> addStock(String productName, int count){
         Product keyProduct = new Product(productName, 0);
         List<Stock> stocks = inven.get(keyProduct);
         if (stocks == null) {
@@ -25,6 +25,7 @@ public class Inventory {
             inven.get(keyProduct).add(newStock);
             newStock.accept(insertVisitor);
         }
+        return stocks;
     }
 
     public void addStock(String productName, int count, LocalDate expDate){
@@ -46,11 +47,15 @@ public class Inventory {
         stock.accept(deleteVisitor);
     }
 
-    public void addProduct(String productName, long price){
+    public void addProduct(String productName, int price){
         Product newProduct = new Product(productName, price);
         List<Stock> stockList = new ArrayList<>();
         inven.put(newProduct, stockList);
         newProduct.accept(insertVisitor);
+    }
+
+    public int getProductsSize() {
+        return inven.size();
     }
 
     public void removeProduct(String productName){

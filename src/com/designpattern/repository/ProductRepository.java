@@ -16,7 +16,7 @@ public class ProductRepository extends DaoRepository<Product> {
         deleteAllBy("DELETE FROM product WHERE name = '" + name + "';");
     }
 
-    public void updatePriceByName(String name, long price) throws SQLException {
+    public void updatePriceByName(String name, int price) throws SQLException {
         Product product = findByName(name);
         deleteByName(name);
         save(new Product(product.getName(), price));
@@ -34,6 +34,6 @@ public class ProductRepository extends DaoRepository<Product> {
 
     @Override
     protected Product mapToModel(ResultSet resultSet) throws SQLException {
-        return new Product(resultSet.getString("name"), resultSet.getLong("price"));
+        return new Product(resultSet.getString("name"), resultSet.getInt("price"));
     }
 }

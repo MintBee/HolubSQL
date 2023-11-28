@@ -7,10 +7,6 @@ public final class ProductDto {
     private final int price;
     private final int quantity;
 
-    public ProductDto(String name, int price) {
-        this(name, price, 0);
-    }
-
     public ProductDto(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
