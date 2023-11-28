@@ -11,8 +11,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Inventory {
     private final Map<Product, List<Stock>> inven = new ConcurrentHashMap<>();
-    DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
-    DbInsertVisitor insertVisitor = new DbInsertVisitor();
+    private final DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
+    private final DbInsertVisitor insertVisitor = new DbInsertVisitor();
+
+    public Inventory() {
+        for (Product product : DbModelFactory.getAllProducts()) {
+            List<Stock> stocks = DbModelFactory.getAllStocksByProduct(product.getName());
+            inven.put(product, stocks);
+        }
+    }
 
     public List<Stock> addStock(String productName, int count){
         Product keyProduct = new Product(productName, 0);
