@@ -4,89 +4,85 @@ import com.designpattern.exception.NoSuchProductException;
 import com.designpattern.model.*;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Inventory {
-    HashMap<Product, List<Stock>> inven;
-    Iterator<Map.Entry<Product, List<Stock>>> iter = inven.entrySet().iterator();
+    private final Map<Product, List<Stock>> inven = new ConcurrentHashMap<>();
     DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
     DbInsertVisitor insertVisitor = new DbInsertVisitor();
 
-
-    public void addStock(String name, int count){
-        Product comp = new Product(name, 0);
-        while(iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                for(int i = 0; i<count; i++){
-                    Stock newStock = new UndecayingStock(name);
-                    entry.getValue().add(newStock);
-                    newStock.accept(insertVisitor);
-                }
-            }
+    public void addStock(String productName, int count){
+        Product keyProduct = new Product(productName, 0);
+        List<Stock> stocks = inven.get(keyProduct);
+        if (stocks == null) {
+            throw new NoSuchProductException();
+        }
+        for (int i = 0; i < count; i++) {
+            Stock newStock = new UndecayingStock(productName);
+            inven.get(keyProduct).add(newStock);
+            newStock.accept(insertVisitor);
         }
     }
 
-    public void addStock(String name, int count, LocalDate expDate){
-        Product comp = new Product(name, 0);
-        while(iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                    Stock newStock = new DecayingStock(name, expDate);
-                    entry.getValue().add(newStock);
-                    newStock.accept(insertVisitor);
-                    Collections.sort(entry.getValue(), new Comparator<Stock>() {
-                        @Override
-                        public int compare(Stock o1, Stock o2) {
-                            return o1.getExpirationDate().compareTo(o2.getExpirationDate());
-                        }
-                    });
-            }
+    public void addStock(String productName, int count, LocalDate expDate){
+        Product keyProduct = new Product(productName, 0);
+        List<Stock> stocks = inven.get(keyProduct);
+        if (stocks == null) {
+            throw new NoSuchProductException();
+        }
+        for (int i = 0; i < count; i++) {
+            Stock newStock = new DecayingStock(productName, expDate);
+            inven.get(keyProduct).add(newStock);
+            newStock.accept(insertVisitor);
         }
     }
 
+    public void removeStock(Stock stock) {
+        List<Stock> stocks = inven.get(new Product(stock.getProductName(), 0));
+        stocks.remove(stock);
+        stock.accept(deleteVisitor);
+    }
 
-    public void addProduct(String name, long price){
-        Product newProduct = new Product(name, price);
-        List<Stock> stockList = new ArrayList<Stock>();
+    public void addProduct(String productName, long price){
+        Product newProduct = new Product(productName, price);
+        List<Stock> stockList = new ArrayList<>();
         inven.put(newProduct, stockList);
         newProduct.accept(insertVisitor);
     }
 
-    public void removeProduct(String name){
-        Product comp = new Product(name, 0);
-        while(iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                entry.getKey().accept(deleteVisitor);
-                iter.remove();
-            }
-        }
-
+    public void removeProduct(String productName){
+        Product keyProduct = new Product(productName, 0);
+        keyProduct.accept(deleteVisitor);
+        inven.remove(keyProduct);
     }
 
-    public List<Stock> findProduct(String name){
+    public Product findProduct(String name){
         Product comp = new Product(name, 0);
-        List<Stock> result = new ArrayList<Stock>();
-        while(iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                result = entry.getValue();
-            }
-        }
-        return result;
+
+        return inven.keySet().stream()
+                .filter(stocks -> stocks.equals(comp))
+                .findFirst()
+                .orElseThrow(NoSuchProductException::new);
     }
 
-    public void sell(String name, int count){
-        Product comp = new Product(name, 0);
-        while (iter.hasNext()){
-            Map.Entry<Product, List<Stock>> entry = iter.next();
-            if(entry.getKey().equals(comp)){
-                for(int i =0; i<count; i++){
-                    entry.getValue().get(i).accept(deleteVisitor);
-                    entry.getValue().remove(i);
-                }
-            }
+    public void sell(String productName, int count) {
+        for (int i = 0; i < count ; i++) {
+            sell(productName);
+        }
+    }
+
+    private void sell(String productName) {
+        synchronized (inven) {
+            Product comp = new Product(productName, 0);
+            List<Stock> productStocks = inven.getOrDefault(comp, new ArrayList<>());
+            Stock stockToSell = productStocks
+                .stream().findFirst()
+                .orElseThrow(NoSuchProductException::new);
+            productStocks.remove(stockToSell);
+            stockToSell.accept(new DbDeleteVisitor());
         }
     }
 }
