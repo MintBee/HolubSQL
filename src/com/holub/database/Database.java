@@ -259,6 +259,8 @@ public final class Database
 {
     private static final IOFactory ioFactory = IOFactoryRegistry.getInstance();
 
+    private boolean isTableCreated = false;
+
     /* The directory that represents the database.
 	 */
 	private File 	  location     = new File(".");
@@ -553,6 +555,7 @@ public final class Database
 
 		Table newTable = TableFactory.create(name, columnNames);
 		tables.put( name, newTable );
+        isTableCreated = true;
 	}
 
 	/** Destroy both internal and external (on the disk) versions
@@ -581,7 +584,7 @@ public final class Database
 		if( values != null )
 		{	for( Iterator i = values.iterator(); i.hasNext(); )
 			{	Table current = (Table ) i.next();
-				if( current.isDirty() )
+				if( current.isDirty() || isTableCreated)
 				{
 					current.export(ioFactory.createExporter(new File(location, current.name() + "." + ioFactory.fileExtension())) );
 				}
