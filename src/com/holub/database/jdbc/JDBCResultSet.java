@@ -123,4 +123,8 @@ public class JDBCResultSet extends ResultSetAdapter
 	public ResultSetMetaData getMetaData() throws SQLException
 	{	return new JDBCResultSetMetaData(cursor);
 	}
+
+    @Override
+    public void close() throws SQLException {
+    }
 }

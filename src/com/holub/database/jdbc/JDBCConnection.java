@@ -66,8 +66,9 @@ public class JDBCConnection extends ConnectionAdapter
 
 	public JDBCConnection(URI uri) throws	SQLException,
 											IOException
-	{	database = new Database( uri );
-	}
+	{
+        database = new Database( uri );
+    }
 
 	/** Close a database connection. A commit is issued
 	 *  automatically if auto-commit mode is disabled.
