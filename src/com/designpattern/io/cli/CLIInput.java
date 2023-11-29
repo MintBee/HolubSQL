@@ -1,6 +1,7 @@
 package com.designpattern.io.cli;
 
 import com.designpattern.exception.NoSuchProductException;
+import com.designpattern.exception.OutOfStockException;
 import com.designpattern.io.InputBoundary;
 
 import java.time.LocalDate;
@@ -24,7 +25,7 @@ public class CLIInput {
             while (actionOption != InputOption.EXIT) {
                 try {
                     printOptions();
-                    actionOption = InputOption.values()[Integer.parseInt(this.getUserInput())];
+                    actionOption = InputOption.values()[Integer.parseInt(this.getUserInput())-1];
                     parseUserActionOption(actionOption);
                 } catch (NumberFormatException e) {
                     System.out.println("옵션 내의 숫자를 입력해 주세요.");
@@ -39,14 +40,17 @@ public class CLIInput {
         switch (option) {
             case SELL_STOCK: {
                     try {
-                        System.out.println("구매할 물건의 이름을 입력해 주세요.");
+                        System.out.println("판매할 물건의 이름을 입력해 주세요(취소: c).");
                         String stockName = this.getUserInput();
-                        System.out.println("구매할 개수를 입력해 주세요.");
-                        int stockCount = Integer.parseInt(this.getUserInput());
+                        if (stockName.equals("c")) break;
+                        System.out.println("판매할 개수를 입력해 주세요(취소: c).");
+                        String stockCountInput = this.getUserInput();
+                        if (stockCountInput.equals("cancel")) break;
+                        int stockCount = Integer.parseInt(stockCountInput);
 
                         this.inputBoundary.sellStocks(stockName, stockCount);
 
-                        System.out.println("정상적으로 판매 되었습니다.");
+                        System.out.println("정상적으로 판매되었습니다.");
 
                     } catch(NoSuchProductException e) {
                         System.out.println("일치하는 상품이 없습니다.");
@@ -55,28 +59,35 @@ public class CLIInput {
                     } catch(NumberFormatException e) {
                         System.out.println("상품 개수는 숫자로 입력해 주세요");
                         parseUserActionOption(option);
+                    } catch(OutOfStockException e) {
+                        System.out.println("판매할 상품의 개수가 부족합니다.");
+                        parseUserActionOption(option);
                     }
                     break;
             }
             case ADD_STOCK: {
                     try {
-                        System.out.println("상품의 이름을 입력해 주세요.");
+                        System.out.println("입고할 물건의 이름을 입력해 주세요(취소: c).");
                         String stockName = this.getUserInput();
+                        if (stockName.equals("c")) break;
 
-                        System.out.println("상품의 개수를 입력해 주세요.");
-                        int stockCount = Integer.parseInt(this.getUserInput());
+                        System.out.println("입고할 개수를 입력해 주세요(취소: c).");
+                        String stockCountInput = this.getUserInput();
+                        if (stockCountInput.equals("c")) break;
+                        int stockCount = Integer.parseInt(stockCountInput);
 
-                        System.out.println("상품의 유통 기한을 입력해 주세요(yyyy-MM-dd). 유통 기한이 없다면 바로 [Enter]를 눌러 주세요.");
+                        System.out.println("상품의 유통 기한을 입력해 주세요(yyyy-MM-dd). 유통 기한이 없다면 바로 [Enter]를 눌러 주세요(취소: c).");
                         DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         String expirationDateInput = this.getUserInput();
+                        if (expirationDateInput.equals("c")) break;
 
                         if (expirationDateInput.isEmpty()) {
                             this.inputBoundary.addStock(stockName, stockCount);
-                            System.out.println("정상적으로 재입고 되었습니다.");
+                            System.out.println("정상적으로 재입고되었습니다.");
                             break;
                         }
                         this.inputBoundary.addStock(stockName, stockCount, LocalDate.parse(expirationDateInput, dtFormatter));
-                        System.out.println("정상적으로 재입고 되었습니다.");
+                        System.out.println("정상적으로 재입고되었습니다.");
                     } catch(NoSuchProductException e) {
                         System.out.println("일치하는 상품이 없습니다.");
                         parseUserActionOption(option);
@@ -94,14 +105,18 @@ public class CLIInput {
             }
             case ADD_PRODUCT: {
                     try {
-                        System.out.println("품목의 이름을 입력해 주세요.");
-                        String itemName = this.getUserInput();
-                        System.out.println("품목의 가격을 입력해 주세요.");
-                        int itemPrice = Integer.parseInt(this.getUserInput());
+                        System.out.println("품목의 이름을 입력해 주세요(취소: c).");
+                        String productName = this.getUserInput();
+                        if (productName.equals("c")) break;
 
-                        this.inputBoundary.addNewProduct(itemName, itemPrice);
+                        System.out.println("품목의 가격을 입력해 주세요(취소: c).");
+                        String productPriceInput = this.getUserInput();
+                        if (productPriceInput.equals("c")) break;
+                        int productPrice = Integer.parseInt(productPriceInput);
 
-                        System.out.println("정상적으로 등록 되었습니다.");
+                        this.inputBoundary.addNewProduct(productName, productPrice);
+
+                        System.out.println("정상적으로 등록되었습니다.");
                     } catch(NumberFormatException e) {
                         System.out.println("가격은 숫자로 입력해 주세요");
                         parseUserActionOption(option);
@@ -113,12 +128,13 @@ public class CLIInput {
             }
             case REMOVE_PRODUCT: {
                     try {
-                        System.out.println("품목의 이름을 입력해 주세요.");
-                        String itemName = this.getUserInput();
+                        System.out.println("품목의 이름을 입력해 주세요(취소: c).");
+                        String productName = this.getUserInput();
+                        if (productName.equals("c")) break;
 
-                        this.inputBoundary.removeProduct(itemName);
+                        this.inputBoundary.removeProduct(productName);
 
-                        System.out.println("정상적으로 삭제 되었습니다.");
+                        System.out.println("정상적으로 삭제되었습니다.");
                     } catch(NoSuchProductException e) {
                         System.out.println("일치하는 상품이 없습니다.");
                         parseUserActionOption(option);
