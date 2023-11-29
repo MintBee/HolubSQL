@@ -1,5 +1,6 @@
 package com.designpattern.repository;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -11,8 +12,12 @@ import java.util.List;
  * @param <T> type of model class
  */
 public abstract class DaoRepository<T> {
-    private static final String DB_PATH = Paths.get(".").toUri().getPath();
+    private static final String DB_PATH = Paths.get("storage").toAbsolutePath().toString().replaceAll("\\\\", "/");
     private static final String DRIVER_NAME = "com.holub.database.jdbc.JDBCDriver";
+
+    static {
+        new File(DB_PATH).mkdirs();
+    }
 
     public DaoRepository() {
         try {
@@ -24,7 +29,7 @@ public abstract class DaoRepository<T> {
     }
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("file://" + DB_PATH);
+        return DriverManager.getConnection("file:/"+DB_PATH, "harpo", "swordfish");
     }
 
     public T save(T model) throws SQLException {
@@ -71,4 +76,13 @@ public abstract class DaoRepository<T> {
     }
 
     protected abstract T mapToModel(ResultSet resultSet) throws SQLException;
+
+    protected void createTableWith(String createQuery) {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.executeUpdate(createQuery);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

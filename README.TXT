@@ -28,3 +28,14 @@ Released 27 Sept., 2004
  *    caused by bugs, including lost productivity or data)
  *    in any of this code.
  */
+
+
+# 재고관리 프로그램
+// 각 사람 이름 쓰기
+
+주의: 만약 한글이 깨진다면 아래와 같이 인코딩을 지정해준다.
+1. IDE 인코딩을 UTF-8로 변경 (Intellij의 경우 File -> Settings 에서 encoding을 검색해 모든 인코딩을 UTF-8로 변경해준다.)
+2. Java VM 인코딩을 UTF-8로 변경
+  다음과 같은 옵션을 추가해준다. (만약 Intellij를 사용한다면 shift-shift -> Edit Custom VM Options)
+  * -Dfile.encoding=UTF-8
+  * -Dconsole.encoding=UTF-8

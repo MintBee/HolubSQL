@@ -14,7 +14,7 @@ import java.util.List;
 public class StockRepository extends DaoRepository<Stock> {
     public List<Stock> findByProduct(Product product) {
         try {
-            return findAllBy("SELECT * FROM stock WHERE product_name = '" + product.getName() + "';");
+            return findAllBy("SELECT * FROM stock WHERE product_name = '" + product.getName());
         } catch (SQLException e) {
             throw new NoSuchProductException(e);
         }
@@ -22,7 +22,7 @@ public class StockRepository extends DaoRepository<Stock> {
 
     public void delete(long id) {
         try {
-            deleteAllBy("DELETE FROM stock WHERE id = " + id + ";");
+            deleteAllBy("DELETE FROM stock WHERE id = " + id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -30,7 +30,7 @@ public class StockRepository extends DaoRepository<Stock> {
 
     public void deleteByProduct(String name) {
         try {
-            deleteAllBy("DELETE FROM stock WHERE product_name = '" + name + "';");
+            deleteAllBy("DELETE FROM stock WHERE product_name = '" + name);
         } catch (SQLException e) {
             throw new NoSuchProductException(e);
         }
@@ -38,7 +38,7 @@ public class StockRepository extends DaoRepository<Stock> {
 
     public void deleteByExpirationDate(LocalDate expirationDate) {
         try {
-            deleteAllBy("DELETE FROM stock WHERE expiration_date = '" + expirationDate + "';");
+            deleteAllBy("DELETE FROM stock WHERE expiration_date = '" + expirationDate);
         } catch (SQLException e) {
             throw new NoSuchProductException(e);
         }
@@ -48,9 +48,9 @@ public class StockRepository extends DaoRepository<Stock> {
     @Override
     protected String getInsertQuery(Stock stock) {
         if (stock instanceof DecayingStock) {
-            return "INSERT INTO stock (product_name, expiration_date) VALUES ('" + stock.getProductName() + "', '" + ((DecayingStock) stock).getExpirationDate() + "');";
+            return "INSERT INTO stock (product_name, expiration_date) VALUES ('" + stock.getProductName() + "', '" + ((DecayingStock) stock).getExpirationDate() + "')";
         } else {
-            return "INSERT INTO stock (product_name, expiration_date) VALUES ('" + stock.getProductName() + "', NULL);";
+            return "INSERT INTO stock (product_name, expiration_date) VALUES ('" + stock.getProductName() + "', NULL)";
 
         }
     }
@@ -67,5 +67,9 @@ public class StockRepository extends DaoRepository<Stock> {
         } else {
             return new DecayingStock(resultSet.getString("product_name"), resultSet.getDate("expiration_date").toLocalDate());
         }
+    }
+
+    public void createTable() {
+        createTableWith("CREATE TABLE stock (id INT , product_name VARCHAR NOT NULL, expiration_date DATE, PRIMARY KEY(id))");
     }
 }
