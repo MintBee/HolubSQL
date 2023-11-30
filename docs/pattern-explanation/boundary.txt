@@ -3,5 +3,5 @@
 클라이언트와 서버 모델을 분리하기 위해 서로의 인터페이스를 우선적으로 정의했습니다.
 서로의 직접적인 구현체는 알 필요 없이 서로의 인터페이스에 정의된 메소드만 상황에 맞게 호출하면 되기 때문에 서버는 비교적 변화가 잦은 UI로부터 자유로워지게 됩니다.
 
-- InputBoundary: 유저의 입력 값 처리와 관련된 오퍼레이션 정의
-- OutputBoundary: 유저 입력 값에 대한 결과 출력과 관련된 오퍼레이션 정의
+- src.com.designpattern.io.InputBoundary: 유저의 입력 값 처리와 관련된 오퍼레이션 정의
+- src.com.designpattern.io.OutputBoundary: 유저 입력 값에 대한 결과 출력과 관련된 오퍼레이션 정의
