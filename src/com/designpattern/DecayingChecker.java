@@ -13,25 +13,32 @@ public class DecayingChecker implements Observer {
     private LocalDate now;
     private final Inventory inventory;
 
-    public DecayingChecker(Inventory inventory) {
+    public DecayingChecker(
+            Inventory inventory,
+            Observable observable
+    ) {
+        observable.addObserver(this);
         this.inventory = inventory;
     }
 
-    private void checkDecayingStocks(){
-        List<Stock> decayingStocks = DbModelFactory.getAllStocks();
+    private synchronized void checkDecayingStocks(){
+        List<Stock> decayingStocks = inventory.getAllStocks();
 
         for (Stock stock : decayingStocks) {
+            System.out.println(stock.getExpirationDate());
             if(stock instanceof DecayingStock decayingStock){
                 if(decayingStock.getExpirationDate().isAfter(now)){
                     decayingStock.setIsDecayed(true);
+                    inventory.deleteStock(decayingStock);
                 }
             }
         }
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public synchronized void update(Observable o, Object arg) {
         now = ((TimeSimulator) o).now();
+        System.out.println("now : "+now);
         checkDecayingStocks();
     }
 }

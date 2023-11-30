@@ -24,24 +24,28 @@ public class TimeSimulator extends Observable implements AppTime {
     }
 
     @Override
-    public void becomeTomorrow() {
+    public synchronized void becomeTomorrow() {
         currentDate = currentDate.plusDays(1);
     }
 
     @Override
-    public LocalDate now() {
+    public synchronized LocalDate now() {
         return currentDate;
     }
 
-    public void simulate() {
+    public synchronized void simulate() {
         executorService.submit(() -> {
             while (true) {
                 try {
-                    TimeUnit.SECONDS.sleep(secondsTakeForTomorrow);
+                    TimeUnit.MILLISECONDS.sleep(secondsTakeForTomorrow);
+                    System.out.println("하루가 지남");
                     becomeTomorrow();
+                    setChanged();
                     notifyObservers();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("하루가 지남");
+//                    e.printStackTrace();
+                    System.out.println("ㅁㄴㅇ롬내ㅑㄹㄴ매ㅑ런매ㅑㄹ");
                 }
             }
         });

@@ -12,5 +12,6 @@ public class TestApp {
         CLIInput cli = new CLIInput(testController);
 
         cli.start();
+
     }
 }
