@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InventoryTest {
-    Inventory inventory = new Inventory();
+    Inventory inventory = new InventoryImpl();
     final String testProductName = "test product name";
 
     @Test

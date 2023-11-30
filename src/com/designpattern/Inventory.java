@@ -1,122 +1,27 @@
 package com.designpattern;
 
-import com.designpattern.exception.NoSuchProductException;
-import com.designpattern.exception.OutOfStockException;
-import com.designpattern.model.*;
+import com.designpattern.model.Product;
+import com.designpattern.model.Stock;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class Inventory {
-    private final Map<Product, List<Stock>> inven = new ConcurrentHashMap<>();
-    private final DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
-    private final DbInsertVisitor insertVisitor = new DbInsertVisitor();
+public interface Inventory {
+    List<Stock> addStock(String productName, int count);
 
-    public Inventory() {
-        for (Product product : DbModelFactory.getAllProducts()) {
-            List<Stock> stocks = DbModelFactory.getAllStocksByProduct(product.getName());
-            inven.put(product, stocks);
-        }
-    }
+    void addStock(String productName, int count, LocalDate expDate);
 
-    public List<Stock> addStock(String productName, int count){
-        Product keyProduct = findProduct(productName);
-        List<Stock> stocks = inven.get(keyProduct);
-        if (stocks == null) {
-            throw new NoSuchProductException();
-        }
-        for (int i = 0; i < count; i++) {
-            Stock newStock = new UndecayingStock(productName);
-            inven.get(keyProduct).add(newStock);
-            newStock.accept(insertVisitor);
-        }
-        return stocks;
-    }
+    void deleteStock(Stock stock);
 
-    public void addStock(String productName, int count, LocalDate expDate){
-        Product keyProduct = findProduct(productName);
-        List<Stock> stocks = inven.get(keyProduct);
-        if (stocks == null) {
-            throw new NoSuchProductException();
-        }
-        for (int i = 0; i < count; i++) {
-            Stock newStock = new DecayingStock(productName, expDate);
-            inven.get(keyProduct).add(newStock);
-            inven.get(keyProduct).sort(new Comparator<Stock>(){
-                public int compare(Stock o1, Stock o2){
-                    return o1.getExpirationDate().compareTo(o2.getExpirationDate());
-                }
-            });
-            newStock.accept(insertVisitor);
-        }
-    }
+    List<Stock> getAllStocks();
 
-    public void deleteStock(Stock stock) {
-        List<Stock> stocks = inven.get(new Product(stock.getProductName(), 0));
-        stocks.remove(stock);
-        stock.accept(deleteVisitor);
-    }
+    void addProduct(String productName, int price);
 
-    public List<Stock> getAllStocks() {
-        //generate flatten all list of stock into one list
-        return inven.values().stream().flatMap(List::stream).toList();
-    }
+    int getProductsQuantity(String productName);
 
-    public void addProduct(String productName, int price){
-        Product newProduct = new Product(productName, price);
-        List<Stock> stockList = new ArrayList<>();
-        inven.put(newProduct, stockList);
-        newProduct.accept(insertVisitor);
-    }
+    void deleteProduct(String productName);
 
-    public int getProductsQuantity(String productName) {
-        Product keyProduct = new Product(productName, 0);
-        if (inven.get(keyProduct) != null) {
-            return inven.get(keyProduct).size();
-        } else {
-            return 0;
-        }
-    }
+    Product findProduct(String name);
 
-    public void deleteProduct(String productName){
-        Product keyProduct = findProduct(productName);
-
-        inven.remove(keyProduct);
-        keyProduct.accept(deleteVisitor);
-    }
-
-    /**
-     * @exception NoSuchProductException if there is no product with the given name
-     */
-    public Product findProduct(String name){
-        Product comp = new Product(name, 0);
-
-        return inven.keySet().stream()
-                .filter(stocks -> stocks.equals(comp))
-                .findFirst()
-                .orElseThrow(NoSuchProductException::new);
-    }
-
-    public void sell(String productName, int count) {
-        Product keyProduct = findProduct(productName);
-        for (int i = 0; i < count ; i++) {
-            sell(keyProduct);
-        }
-
-    }
-
-    private void sell(Product target) {
-        synchronized (inven) {
-            List<Stock> productStocks = inven.getOrDefault(target, new ArrayList<>());
-            Stock stockToSell = productStocks
-                .stream().findFirst()
-                .orElseThrow(OutOfStockException::new);
-            productStocks.remove(stockToSell);
-            stockToSell.accept(deleteVisitor);
-        }
-    }
+    void sell(String productName, int count);
 }
