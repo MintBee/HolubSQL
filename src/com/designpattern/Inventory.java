@@ -64,7 +64,11 @@ public class Inventory {
 
     public int getProductsQuantity(String productName) {
         Product keyProduct = new Product(productName, 0);
-        return inven.get(keyProduct).size();
+        if (inven.get(keyProduct) != null) {
+            return inven.get(keyProduct).size();
+        } else {
+            return 0;
+        }
     }
 
     public void removeProduct(String productName){

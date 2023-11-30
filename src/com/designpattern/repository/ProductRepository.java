@@ -8,12 +8,12 @@ import java.sql.SQLException;
 
 public class ProductRepository extends DaoRepository<Product> {
     public Product findByName(String name) throws SQLException {
-        return findAllBy("SELECT * FROM product WHERE name = '" + name)
+        return findAllBy("SELECT * FROM product WHERE name = '" + name + "'")
             .stream().findFirst().orElseThrow(NoSuchProductException::new);
     }
 
     public void deleteByName(String name) throws SQLException {
-        deleteAllBy("DELETE FROM product WHERE name = '" + name);
+        deleteAllBy("DELETE FROM product WHERE name = '" + name + "'");
     }
 
     public void updatePriceByName(String name, int price) throws SQLException {
