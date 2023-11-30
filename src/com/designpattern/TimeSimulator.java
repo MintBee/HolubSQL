@@ -33,7 +33,6 @@ public class TimeSimulator extends Observable implements AppTime {
         while (true) {
             try {
                 TimeUnit.MILLISECONDS.sleep(secondsTakeForTomorrow);
-                System.out.println("하루가 지남");
                 becomeTomorrow();
                 setChanged();
                 notifyObservers();
