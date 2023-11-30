@@ -2,8 +2,6 @@ package com.designpattern;
 
 import java.time.LocalDate;
 import java.util.Observable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -12,15 +10,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimeSimulator extends Observable implements AppTime {
     private LocalDate currentDate = LocalDate.now();
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final int secondsTakeForTomorrow;
 
     /**
      * Set periodic task to run per set seconds
-     *
      */
-    public TimeSimulator(int secondsTakeForTomorrow) {
-        this.secondsTakeForTomorrow = secondsTakeForTomorrow;
+    public TimeSimulator(int millisecondsTakeForTomorrow) {
+        this.secondsTakeForTomorrow = millisecondsTakeForTomorrow;
     }
 
     @Override
@@ -34,20 +30,16 @@ public class TimeSimulator extends Observable implements AppTime {
     }
 
     public synchronized void simulate() {
-        executorService.submit(() -> {
-            while (true) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(secondsTakeForTomorrow);
-                    System.out.println("하루가 지남");
-                    becomeTomorrow();
-                    setChanged();
-                    notifyObservers();
-                } catch (InterruptedException e) {
-                    System.out.println("하루가 지남");
-//                    e.printStackTrace();
-                    System.out.println("ㅁㄴㅇ롬내ㅑㄹㄴ매ㅑ런매ㅑㄹ");
-                }
+        while (true) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(secondsTakeForTomorrow);
+                System.out.println("하루가 지남");
+                becomeTomorrow();
+                setChanged();
+                notifyObservers();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
+        }
     }
 }
