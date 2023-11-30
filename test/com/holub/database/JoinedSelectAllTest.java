@@ -1,7 +1,5 @@
-package com.holub.database.jdbc;
+package com.holub.database;
 
-import com.holub.database.Cursor;
-import com.holub.database.Database;
 import com.holub.text.ParseFailure;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

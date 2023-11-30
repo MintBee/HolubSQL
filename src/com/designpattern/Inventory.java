@@ -71,12 +71,15 @@ public class Inventory {
         }
     }
 
-    public void removeProduct(String productName){
+    public void deleteProduct(String productName){
         Product keyProduct = findProduct(productName);
         keyProduct.accept(deleteVisitor);
         inven.remove(keyProduct);
     }
 
+    /**
+     * @exception NoSuchProductException if there is no product with the given name
+     */
     public Product findProduct(String name){
         Product comp = new Product(name, 0);
 

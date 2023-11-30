@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public interface InputBoundary {
     void addNewProduct(String productName, int price);
-    void removeProduct(String productName);
+    void deleteProduct(String productName);
     void addStock(String productName, int count);
     void addStock(String productName, int count, LocalDate expirationDate);
     void sellStock(String productName);

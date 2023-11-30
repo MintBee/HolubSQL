@@ -8,7 +8,9 @@ import com.designpattern.io.ProductDto;
 import com.designpattern.io.StockDto;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class TestController implements InputBoundary {
     private final List<ProductDto> products = new ArrayList<>();
@@ -25,7 +27,7 @@ public class TestController implements InputBoundary {
     }
 
     @Override
-    public void removeProduct(String productName) {
+    public void deleteProduct(String productName) {
         products.remove(0);
     }
 

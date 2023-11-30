@@ -132,7 +132,7 @@ public class CLIInput {
                         String productName = this.getUserInput();
                         if (productName.equals("c")) break;
 
-                        this.inputBoundary.removeProduct(productName);
+                        this.inputBoundary.deleteProduct(productName);
 
                         System.out.println("정상적으로 삭제되었습니다.");
                     } catch(NoSuchProductException e) {

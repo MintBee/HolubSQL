@@ -24,9 +24,9 @@ public class Shop implements InputBoundary {
     }
 
     @Override
-    public void removeProduct(String productName) {
+    public void deleteProduct(String productName) {
         Product product = inventory.findProduct(productName);
-        inventory.removeProduct(productName);
+        inventory.deleteProduct(productName);
         outputBoundary.outputProduct(new ProductDto(product.getName(), product.getPrice(), inventory.getProductsQuantity(productName)));
     }
 
