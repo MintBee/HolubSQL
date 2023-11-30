@@ -1,0 +1,15 @@
+# Template Repository
+
+데이터베이스에 접근하기 위해 Data access layer를 Repository라는 클래스들을 통해 정의하였습니다.
+모든 Repository의 abstract class가 되는 DaoRepository를 정의한 후, 이곳에 template method들을 정의했습니다.
+
+Template method를 사용한 이유는 다음과 같습니다.
+
+1. Jdbc를 사용하는 공통되는 행동들이 있었기 때문입니다. Repository의 모든 행동은 Jdbc를 기반으로 작동하는데요, 이와 같은 jdbc의 행동은 하나의 클래스 안에
+ 템플릿으로 모으고, 어떤 쿼리를 이용해 동작하는지만 sub-class를 통해 구현하기 위함입니다.
+
+적용 클래스
+com.designpattern.repository.DaoRepository
+ -> Template method가 있는 Template 클래스. JBDC동작의 기본적인 틀을 구현하고, 어떤 쿼리를 통해 동작할지는 abstract 메소드로 sub-class에 맏긴다.
+com.designpattern.repository.ProductRepository, com.designpattern.repository.StockRepository
+ -> 각각 Product, Stock에 맞춰 DaoRepository를 상속하여 어떤 쿼리를 DB에 보낼지를 구현함.
