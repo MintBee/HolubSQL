@@ -48,9 +48,9 @@ public class StockRepository extends DaoRepository<Stock> {
     @Override
     protected String getInsertQuery(Stock stock) {
         if (stock instanceof DecayingStock) {
-            return "INSERT INTO stock (product_name, expiration_date) VALUES ('" + stock.getProductName() + "', '" + ((DecayingStock) stock).getExpirationDate() + "')";
+            return "INSERT INTO stock (id, product_name, expiration_date) VALUES ('" + stock.getId() + "', '" + stock.getProductName() + "', '" + stock.getExpirationDate() + "')";
         } else {
-            return "INSERT INTO stock (product_name, expiration_date) VALUES ('" + stock.getProductName() + "', NULL)";
+            return "INSERT INTO stock (id, product_name, expiration_date) VALUES ('"+ stock.getId() + "', '" + stock.getProductName() + "', NULL)";
 
         }
     }
@@ -65,11 +65,11 @@ public class StockRepository extends DaoRepository<Stock> {
         if (resultSet.getString("expiration_date") == null) {
             return new UndecayingStock(resultSet.getString("product_name"));
         } else {
-            return new DecayingStock(resultSet.getString("product_name"), resultSet.getDate("expiration_date").toLocalDate());
+            return new DecayingStock(resultSet.getString("product_name"), LocalDate.parse(resultSet.getString("expiration_date")));
         }
     }
 
     public void createTable() {
-        createTableWith("CREATE TABLE stock (id INT , product_name VARCHAR NOT NULL, expiration_date DATE, PRIMARY KEY(id))");
+        createTableWith("CREATE TABLE stock (id VARCHAR , product_name VARCHAR NOT NULL, expiration_date VARCHAR, PRIMARY KEY(id))");
     }
 }

@@ -12,7 +12,7 @@ public abstract class Stock {
         this.productName = productName;
     }
 
-    String getId() {
+    public String getId() {
         return id.toString();
     }
 
