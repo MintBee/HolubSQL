@@ -24,7 +24,7 @@ public class InventoryImpl implements Inventory {
     }
 
     @Override
-    public List<Stock> addStock(String productName, int count){
+    public synchronized List<Stock> addStock(String productName, int count){
         Product keyProduct = findProduct(productName);
         List<Stock> stocks = inven.get(keyProduct);
         if (stocks == null) {
@@ -39,7 +39,7 @@ public class InventoryImpl implements Inventory {
     }
 
     @Override
-    public void addStock(String productName, int count, LocalDate expDate){
+    public synchronized void addStock(String productName, int count, LocalDate expDate){
         Product keyProduct = findProduct(productName);
         List<Stock> stocks = inven.get(keyProduct);
         if (stocks == null) {
@@ -58,7 +58,7 @@ public class InventoryImpl implements Inventory {
     }
 
     @Override
-    public void deleteStock(Stock stock) {
+    public synchronized void deleteStock(Stock stock) {
         List<Stock> stocks = inven.get(new Product(stock.getProductName(), 0));
         stocks.remove(stock);
         stock.accept(deleteVisitor);
@@ -71,7 +71,7 @@ public class InventoryImpl implements Inventory {
     }
 
     @Override
-    public void addProduct(String productName, int price){
+    public synchronized void addProduct(String productName, int price){
         Product newProduct = new Product(productName, price);
         List<Stock> stockList = new ArrayList<>();
         inven.put(newProduct, stockList);
@@ -89,7 +89,7 @@ public class InventoryImpl implements Inventory {
     }
 
     @Override
-    public void deleteProduct(String productName){
+    public synchronized void deleteProduct(String productName){
         Product keyProduct = findProduct(productName);
 
         inven.remove(keyProduct);
@@ -110,7 +110,7 @@ public class InventoryImpl implements Inventory {
     }
 
     @Override
-    public void sell(String productName, int count) {
+    public synchronized void sell(String productName, int count) {
         Product keyProduct = findProduct(productName);
         for (int i = 0; i < count ; i++) {
             sell(keyProduct);
@@ -118,7 +118,7 @@ public class InventoryImpl implements Inventory {
 
     }
 
-    private void sell(Product target) {
+    private synchronized void sell(Product target) {
         synchronized (inven) {
             List<Stock> productStocks = inven.getOrDefault(target, new ArrayList<>());
             Stock stockToSell = productStocks
