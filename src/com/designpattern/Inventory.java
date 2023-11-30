@@ -4,7 +4,6 @@ import com.designpattern.exception.NoSuchProductException;
 import com.designpattern.exception.OutOfStockException;
 import com.designpattern.model.*;
 
-import java.text.Collator;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -56,10 +55,15 @@ public class Inventory {
         }
     }
 
-    public void removeStock(Stock stock) {
+    public void deleteStock(Stock stock) {
         List<Stock> stocks = inven.get(new Product(stock.getProductName(), 0));
         stocks.remove(stock);
         stock.accept(deleteVisitor);
+    }
+
+    public List<Stock> getAllStocks() {
+        //generate flatten all list of stock into one list
+        return inven.values().stream().flatMap(List::stream).toList();
     }
 
     public void addProduct(String productName, int price){
