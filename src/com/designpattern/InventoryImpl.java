@@ -12,15 +12,21 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class InventoryImpl implements Inventory {
+
+    private static Inventory instance = new InventoryImpl();
     private final Map<Product, List<Stock>> inven = new ConcurrentHashMap<>();
     private final DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
     private final DbInsertVisitor insertVisitor = new DbInsertVisitor();
 
-    public InventoryImpl() {
+    private InventoryImpl() {
         for (Product product : DbModelFactory.getAllProducts()) {
             List<Stock> stocks = DbModelFactory.getAllStocksByProduct(product.getName());
             inven.put(product, stocks);
         }
+    }
+
+    public static Inventory getInstance() {
+        return instance;
     }
 
     @Override

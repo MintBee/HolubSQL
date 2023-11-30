@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InventoryTest {
-    Inventory inventory = new InventoryImpl();
+    Inventory inventory = InventoryImpl.getInstance();
     final String testProductName = "test product name";
 
     private LocalDate getRandomDate(long minDay, long maxDay){
