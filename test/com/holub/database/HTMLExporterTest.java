@@ -1,8 +1,5 @@
-package com.holub.database.jdbc;
+package com.holub.database;
 
-import com.holub.database.HTMLExporter;
-import com.holub.database.Table;
-import com.holub.database.TableFactory;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
