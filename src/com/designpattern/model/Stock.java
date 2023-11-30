@@ -1,22 +1,19 @@
 package com.designpattern.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public abstract class Stock {
-    private final Long id;
+    private final UUID id;
     private final String productName;
 
-    public Stock(Long id, String productName) {
-        this.id = id;
+    public Stock(String productName) {
+        this.id = UUID.randomUUID();
         this.productName = productName;
     }
 
-    public Stock(String productName) {
-        this(null, productName);
-    }
-
-    Long getId() {
-        return id;
+    String getId() {
+        return id.toString();
     }
 
     public String getProductName() {

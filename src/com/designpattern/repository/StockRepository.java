@@ -20,9 +20,9 @@ public class StockRepository extends DaoRepository<Stock> {
         }
     }
 
-    public void delete(long id) {
+    public void delete(String id) {
         try {
-            deleteAllBy("DELETE FROM stock WHERE id = " + id);
+            deleteAllBy("DELETE FROM stock WHERE id = '" + id + "'");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
