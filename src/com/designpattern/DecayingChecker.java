@@ -45,7 +45,6 @@ public class DecayingChecker implements Observer {
     @Override
     public synchronized void update(Observable o, Object arg) {
         now = ((TimeSimulator) o).now();
-        System.out.println("now : "+now);
         checkDecayingStocks();
     }
 }
