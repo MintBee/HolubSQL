@@ -26,16 +26,19 @@
  */
 package com.holub.database;
 
-import java.util.*;
-import java.io.*;
-import java.text.NumberFormat;
-import java.net.URI;
-
+import com.holub.text.ParseFailure;
+import com.holub.text.Scanner;
 import com.holub.text.Token;
 import com.holub.text.TokenSet;
-import com.holub.text.Scanner;
-import com.holub.text.ParseFailure;
 import com.holub.tools.ThrowableContainer;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+import java.text.NumberFormat;
+import java.util.*;
 
 /***
  *  This class implements a small SQL-subset database.
@@ -257,7 +260,7 @@ a exception toss.
 
 public final class Database
 {
-    private static final IOFactory ioFactory = IOFactoryRegistry.getInstance();
+    private static final ImporterExporterAbstractFactory IMPORTER_EXPORTER_ABSTRACT_FACTORY = ImporterExporterFactoryRegistry.getInstance();
 
     private boolean isTableCreated = false;
 
@@ -297,7 +300,7 @@ public final class Database
 	 */
 	private final class TableMap implements Map
 	{
-        private static final IOFactory ioFactory = IOFactoryRegistry.getInstance();
+        private static final ImporterExporterAbstractFactory IMPORTER_EXPORTER_ABSTRACT_FACTORY = ImporterExporterFactoryRegistry.getInstance();
 
         private final Map realMap;
 		public TableMap( Map realMap ){	this.realMap = realMap; }
@@ -311,7 +314,7 @@ public final class Database
 			{	Table desiredTable = (Table) realMap.get(tableName);
 				if( desiredTable == null )
 				{	desiredTable = TableFactory.load(
-									tableName + "." + ioFactory.fileExtension(),location);
+									tableName + "." + IMPORTER_EXPORTER_ABSTRACT_FACTORY.fileExtension(),location);
 					put(tableName, desiredTable);
 				}
 				return desiredTable;
@@ -586,7 +589,7 @@ public final class Database
 			{	Table current = (Table ) i.next();
 				if( current.isDirty() || isTableCreated)
 				{
-					current.export(ioFactory.createExporter(new File(location, current.name() + "." + ioFactory.fileExtension())) );
+					current.export(IMPORTER_EXPORTER_ABSTRACT_FACTORY.createExporter(new File(location, current.name() + "." + IMPORTER_EXPORTER_ABSTRACT_FACTORY.fileExtension())) );
 				}
 			}
 		}
