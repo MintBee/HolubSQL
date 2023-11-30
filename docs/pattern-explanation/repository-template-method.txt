@@ -1,7 +1,7 @@
 # Template Repository
 
 데이터베이스에 접근하기 위해 Data access layer를 Repository라는 클래스들을 통해 정의하였습니다.
-모든 Repository의 abstract class가 되는 DaoRepository를 정의한 후, 이곳에 template method들을 정의했습니다.
+모든 Repository의 super class가 되는 abstract class DaoRepository를 정의한 후, 이곳에 template method들을 정의했습니다.
 
 Template method를 사용한 이유는 다음과 같습니다.
 

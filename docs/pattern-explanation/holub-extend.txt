@@ -12,9 +12,9 @@ abstract factory 패턴을 사용한 이유는 다음과 같습니다.
 적용 클래스
 com.holub.database.ImporterExporterAbstractFactory
  -> abstract factory 인터페이스
-com.holub.database.CsvIOFactory
+com.holub.database.CsvImporterExporterFactory
  -> csv factory
-com.holub.database.XmlIOFactory
+com.holub.database.CsvImporterExporterFactory
  -> xml factory
 com.holub.database.ImporterExporterFactoryRegistry
  -> csv나 xml factory중 하나를 initialize해 저장해두는 공간
