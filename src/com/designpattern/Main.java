@@ -8,7 +8,7 @@ import com.designpattern.io.cli.CLIOutputBoundary;
 public class Main {
     public static void main(String[] args) {
         OutputBoundary cliOutputBoundary = new CLIOutputBoundary();
-        Inventory inventory = new InventoryImpl();
+        Inventory inventory = InventoryImpl.getInstance();
         InputBoundary shop = new Shop(inventory, cliOutputBoundary);
         CLIInput cli = new CLIInput(shop);
 

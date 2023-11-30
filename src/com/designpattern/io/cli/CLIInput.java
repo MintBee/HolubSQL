@@ -45,7 +45,7 @@ public class CLIInput {
                         if (stockName.equals("c")) break;
                         System.out.println("판매할 개수를 입력해 주세요(취소: c).");
                         String stockCountInput = this.getUserInput();
-                        if (stockCountInput.equals("cancel")) break;
+                        if (stockCountInput.equals("c")) break;
                         int stockCount = Integer.parseInt(stockCountInput);
 
                         this.inputBoundary.sellStocks(stockName, stockCount);
