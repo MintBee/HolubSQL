@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-11-30T06:07:58.547Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="b53eGSYlQh-TxaxWICEq" version="22.1.5" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-30T06:50:54.435Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="rMdYOj57bnS17tisRV9p" version="22.1.5" type="github">
   <diagram name="페이지-1" id="8yWpIlEQ9eC-lhXUe0Wv">
-    <mxGraphModel dx="1674" dy="758" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="797" dy="361" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -43,7 +43,7 @@
             <mxPoint x="380" y="342.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Md-BkLxXCwqExL5JY2hL-19" value="3. 같은 이름의&lt;br&gt;재고 리스트 가져오기()" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+        <mxCell id="Md-BkLxXCwqExL5JY2hL-19" value="3. 같은 이름의 품목의&lt;br&gt;재고 리스트 가져오기()" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="240" y="300" width="130" height="30" as="geometry" />
         </mxCell>
         <mxCell id="Md-BkLxXCwqExL5JY2hL-20" value="2. 판매 개수 입력()" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
