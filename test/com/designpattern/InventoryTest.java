@@ -40,7 +40,7 @@ class InventoryTest {
     }
 
     @Test
-    @Order(900)
+    @Order(130)
     void deleteProduct() {
         // given
         inventory.findProduct(testProductName);
@@ -83,7 +83,7 @@ class InventoryTest {
     }
 
     @Test
-    @Order(130)
+    @Order(140)
     void addDecayingStock(){
         inventory.addProduct(testProductName, 10000);
         LocalDate latterDate = getRandomDate(LocalDate.of(1999, 12, 31).toEpochDay(),
