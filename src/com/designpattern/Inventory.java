@@ -1,6 +1,7 @@
 package com.designpattern;
 
 import com.designpattern.exception.NoSuchProductException;
+import com.designpattern.exception.OutOfStockException;
 import com.designpattern.model.*;
 
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ public class Inventory {
     }
 
     public List<Stock> addStock(String productName, int count){
-        Product keyProduct = new Product(productName, 0);
+        Product keyProduct = findProduct(productName);
         List<Stock> stocks = inven.get(keyProduct);
         if (stocks == null) {
             throw new NoSuchProductException();
@@ -36,7 +37,7 @@ public class Inventory {
     }
 
     public void addStock(String productName, int count, LocalDate expDate){
-        Product keyProduct = new Product(productName, 0);
+        Product keyProduct = findProduct(productName);
         List<Stock> stocks = inven.get(keyProduct);
         if (stocks == null) {
             throw new NoSuchProductException();
@@ -61,12 +62,13 @@ public class Inventory {
         newProduct.accept(insertVisitor);
     }
 
-    public int getProductsSize() {
-        return inven.size();
+    public int getProductsQuantity(String productName) {
+        Product keyProduct = new Product(productName, 0);
+        return inven.get(keyProduct).size();
     }
 
     public void removeProduct(String productName){
-        Product keyProduct = new Product(productName, 0);
+        Product keyProduct = findProduct(productName);
         keyProduct.accept(deleteVisitor);
         inven.remove(keyProduct);
     }
@@ -81,20 +83,22 @@ public class Inventory {
     }
 
     public void sell(String productName, int count) {
+        Product keyProduct = findProduct(productName);
+
         for (int i = 0; i < count ; i++) {
-            sell(productName);
+            sell(keyProduct);
         }
+
     }
 
-    private void sell(String productName) {
+    private void sell(Product target) {
         synchronized (inven) {
-            Product comp = new Product(productName, 0);
-            List<Stock> productStocks = inven.getOrDefault(comp, new ArrayList<>());
+            List<Stock> productStocks = inven.getOrDefault(target, new ArrayList<>());
             Stock stockToSell = productStocks
                 .stream().findFirst()
-                .orElseThrow(NoSuchProductException::new);
+                .orElseThrow(OutOfStockException::new);
             productStocks.remove(stockToSell);
-            stockToSell.accept(new DbDeleteVisitor());
+            stockToSell.accept(deleteVisitor);
         }
     }
 }
