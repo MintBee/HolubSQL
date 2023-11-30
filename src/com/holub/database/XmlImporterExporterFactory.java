@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class XmlImporterExporterAbstractFactory implements ImporterExporterAbstractFactory {
+public class XmlImporterExporterFactory implements ImporterExporterAbstractFactory {
 
     @Override
     public Table.Importer createImporter(File in) {

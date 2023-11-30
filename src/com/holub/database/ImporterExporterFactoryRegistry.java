@@ -4,7 +4,7 @@ public class ImporterExporterFactoryRegistry {
     private static ImporterExporterAbstractFactory factoryInstance;
 
     static {
-        register(new CsvImporterExporterAbstractFactory());
+        register(new CsvImporterExporterFactory());
     }
 
     public static ImporterExporterAbstractFactory getInstance() {

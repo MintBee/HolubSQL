@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CsvImporterExporterAbstractFactory implements ImporterExporterAbstractFactory {
+public class CsvImporterExporterFactory implements ImporterExporterAbstractFactory {
     @Override
     public Table.Importer createImporter(File in) throws IOException {
         return new CSVImporter(new FileReader(in));
