@@ -1,12 +1,3 @@
-- Visited
-com.designpattern.model.Product
-com.designpattern.model.Stock
-
-- Visitor
-com/designpattern/model/ModelVisitor
-com.designpattern.model.DbDeleteVisitor
-com.designpattern.model.DbInsertVisitor
-
 Visitor 패턴을 이용하여 Db에 각 어플리케이션 모델은 Insert하고 Delete하는 오퍼레이션을 구현하였습니다. 이러한 패턴을 이용한 이유는 다음과 같은 이유가 있습니다.
 
 1. 모델들과 관련된 오퍼레이션이었지만, 모델 클래스에 넣으면 cohesion을 해치는 동작들을 구현하고 싶었다.
@@ -15,3 +6,16 @@ Visitor 패턴을 이용하여 Db에 각 어플리케이션 모델은 Insert하�
 2. 어플리케이션 모델이 변하지 않을 것이라는 확신이 있었다.
 저희는 처음에 도메인 모델 분석 및, 유스케이스 분석을 통해 어플리케이션의 기능을 확실히 정해놓았습니다. 그렇기 때문에 도메인 모델들의 구조가 변하지 않을 것이라는 확신이 있었습니다.
 
+- Visited
+com.designpattern.model.Product
+com.designpattern.model.Stock
+
+Visitor를 accept하는 모델들
+
+- Visitor
+com/designpattern/model/ModelVisitor
+Visitor 인터페이스
+com.designpattern.model.DbDeleteVisitor
+모델들을 db에서 삭제하는 기능의 visitor
+com.designpattern.model.DbInsertVisitor
+모델들을 db에 추가하는 기능의 visitor
