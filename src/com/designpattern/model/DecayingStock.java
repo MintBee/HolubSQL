@@ -6,6 +6,11 @@ public class DecayingStock extends Stock {
     private final LocalDate expirationDate;
     private boolean isDecayed;
 
+    public DecayingStock(String id, String productName, LocalDate expirationDate) {
+        super(id, productName);
+        this.expirationDate = expirationDate;
+    }
+
     public DecayingStock(String name, LocalDate expirationDate) {
         super(name);
         this.expirationDate = expirationDate;

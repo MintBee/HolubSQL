@@ -7,6 +7,11 @@ public abstract class Stock {
     private final UUID id;
     private final String productName;
 
+    public Stock(String id, String productName) {
+        this.id = UUID.fromString(id);
+        this.productName = productName;
+    }
+
     public Stock(String productName) {
         this.id = UUID.randomUUID();
         this.productName = productName;

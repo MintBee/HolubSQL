@@ -63,9 +63,9 @@ public class StockRepository extends DaoRepository<Stock> {
     @Override
     protected Stock mapToModel(ResultSet resultSet) throws SQLException {
         if (resultSet.getString("expiration_date") == null) {
-            return new UndecayingStock(resultSet.getString("product_name"));
+            return new UndecayingStock(resultSet.getString("id"), resultSet.getString("product_name"));
         } else {
-            return new DecayingStock(resultSet.getString("product_name"), LocalDate.parse(resultSet.getString("expiration_date")));
+            return new DecayingStock(resultSet.getString("id"), resultSet.getString("product_name"), LocalDate.parse(resultSet.getString("expiration_date")));
         }
     }
 
