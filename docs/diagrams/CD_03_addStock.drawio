@@ -1,0 +1,70 @@
+<mxfile host="app.diagrams.net" modified="2023-11-30T06:44:22.039Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="lGa7jYl4sO6EA3j6NtyK" version="22.1.5" type="github">
+  <diagram name="페이지-1" id="Vdb9fddCmYe7QbANYd6w">
+    <mxGraphModel dx="797" dy="361" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="ZA7M2OG8HltKPzRA6xM--2" target="ZA7M2OG8HltKPzRA6xM--5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--2" value="Shop" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="110" y="210" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="ZA7M2OG8HltKPzRA6xM--5" target="ZA7M2OG8HltKPzRA6xM--7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="ZA7M2OG8HltKPzRA6xM--5" target="ZA7M2OG8HltKPzRA6xM--8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--5" value="Inventory" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="350" y="210" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="ZA7M2OG8HltKPzRA6xM--7" target="ZA7M2OG8HltKPzRA6xM--8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--7" value="Product" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="350" y="370" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--8" value="Stock" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="534" y="210" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--9" value="1. 품목 이름 입력()" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="130" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--10" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZA7M2OG8HltKPzRA6xM--9" target="ZA7M2OG8HltKPzRA6xM--9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="90" as="sourcePoint" />
+            <mxPoint x="340" y="40" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--11" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="380" y="287.5" as="sourcePoint" />
+            <mxPoint x="380" y="342.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--12" value="4. 입력한 품목과&lt;br&gt;같은 이름의 재고 리스트&lt;br&gt;가져오기()" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="300" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--15" value="2. 입고 개수 입력()" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="150" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--16" value="3. 폐기날짜 입력(선택)()" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="170" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--19" value="5. 입력한 개수만큼 &lt;br&gt;재고 리스트에 새 재고 추가()" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="380" y="160" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--20" value="6. 재고 리스트 저장()&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="430" y="300" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZA7M2OG8HltKPzRA6xM--21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="287.5" as="sourcePoint" />
+            <mxPoint x="430" y="342.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
