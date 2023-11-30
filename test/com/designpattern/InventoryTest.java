@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -15,6 +18,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class InventoryTest {
     Inventory inventory = new InventoryImpl();
     final String testProductName = "test product name";
+
+    private LocalDate getRandomDate(long minDay, long maxDay){
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+        return randomDate;
+    }
 
     @Test
     @Order(100)
@@ -73,4 +82,30 @@ class InventoryTest {
         assertThat(productsQuantity).isEqualTo(9);
     }
 
+    @Test
+    @Order(130)
+    void addDecayingStock(){
+        inventory.addProduct(testProductName, 10000);
+        LocalDate latterDate = getRandomDate(LocalDate.of(1999, 12, 31).toEpochDay(),
+                LocalDate.of(2023, 11, 30).toEpochDay());
+        LocalDate formerDate = getRandomDate(LocalDate.of(1999, 12, 31).toEpochDay(),
+                LocalDate.of(2023, 11, 30).toEpochDay());
+
+
+        if(latterDate.isBefore(formerDate)){
+            LocalDate temp = latterDate;
+            latterDate = formerDate;
+            formerDate = temp;
+        }
+
+        inventory.addStock(testProductName, 1, latterDate);
+        inventory.addStock(testProductName, 1, formerDate);
+
+
+        inventory.sell(testProductName, 1);
+
+        assertThat(inventory.getAllStocks().get(0).getExpirationDate().equals(latterDate))
+                .isTrue();
+
+    }
 }
