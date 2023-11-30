@@ -45,7 +45,7 @@ public class CLIInput {
                         if (stockName.equals("c")) break;
                         System.out.println("판매할 개수를 입력해 주세요(취소: c).");
                         String stockCountInput = this.getUserInput();
-                        if (stockCountInput.equals("cancel")) break;
+                        if (stockCountInput.equals("c")) break;
                         int stockCount = Integer.parseInt(stockCountInput);
 
                         this.inputBoundary.sellStocks(stockName, stockCount);
@@ -132,7 +132,7 @@ public class CLIInput {
                         String productName = this.getUserInput();
                         if (productName.equals("c")) break;
 
-                        this.inputBoundary.removeProduct(productName);
+                        this.inputBoundary.deleteProduct(productName);
 
                         System.out.println("정상적으로 삭제되었습니다.");
                     } catch(NoSuchProductException e) {

@@ -20,14 +20,14 @@ public class Shop implements InputBoundary {
     @Override
     public void addNewProduct(String productName, int price) {
         inventory.addProduct(productName, price);
-        outputBoundary.outputProduct(new ProductDto(productName, price, inventory.getProductsSize()));
+        outputBoundary.outputProduct(new ProductDto(productName, price, inventory.getProductsQuantity(productName)));
     }
 
     @Override
-    public void removeProduct(String productName) {
+    public void deleteProduct(String productName) {
         Product product = inventory.findProduct(productName);
-        inventory.removeProduct(productName);
-        outputBoundary.outputProduct(new ProductDto(product.getName(), product.getPrice(), inventory.getProductsSize()));
+        inventory.deleteProduct(productName);
+        outputBoundary.outputProduct(new ProductDto(product.getName(), product.getPrice(), inventory.getProductsQuantity(productName)));
     }
 
     @Override
@@ -57,6 +57,6 @@ public class Shop implements InputBoundary {
     @Override
     public void requestProduct(String productName) {
         Product product = inventory.findProduct(productName);
-        outputBoundary.outputProduct(new ProductDto(product.getName(), product.getPrice(), inventory.getProductsSize()));
+        outputBoundary.outputProduct(new ProductDto(product.getName(), product.getPrice(), inventory.getProductsQuantity(product.getName())));
     }
 }

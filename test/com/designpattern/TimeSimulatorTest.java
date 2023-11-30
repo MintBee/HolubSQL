@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class TimeSimulatorTest {
-    TimeSimulator timeSimulator = new TimeSimulator(1);
+    TimeSimulator timeSimulator = new TimeSimulator(1000);
 
     @Disabled
     @Test

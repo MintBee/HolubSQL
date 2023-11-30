@@ -14,15 +14,15 @@ import java.util.List;
 public class StockRepository extends DaoRepository<Stock> {
     public List<Stock> findByProduct(Product product) {
         try {
-            return findAllBy("SELECT * FROM stock WHERE product_name = '" + product.getName());
+            return findAllBy("SELECT * FROM stock WHERE product_name = '" + product.getName() + "'");
         } catch (SQLException e) {
             throw new NoSuchProductException(e);
         }
     }
 
-    public void delete(long id) {
+    public void delete(String id) {
         try {
-            deleteAllBy("DELETE FROM stock WHERE id = " + id);
+            deleteAllBy("DELETE FROM stock WHERE id = '" + id + "'");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -30,7 +30,7 @@ public class StockRepository extends DaoRepository<Stock> {
 
     public void deleteByProduct(String name) {
         try {
-            deleteAllBy("DELETE FROM stock WHERE product_name = '" + name);
+            deleteAllBy("DELETE FROM stock WHERE product_name = '" + name + "'");
         } catch (SQLException e) {
             throw new NoSuchProductException(e);
         }
@@ -38,7 +38,7 @@ public class StockRepository extends DaoRepository<Stock> {
 
     public void deleteByExpirationDate(LocalDate expirationDate) {
         try {
-            deleteAllBy("DELETE FROM stock WHERE expiration_date = '" + expirationDate);
+            deleteAllBy("DELETE FROM stock WHERE expiration_date = '" + expirationDate + "'");
         } catch (SQLException e) {
             throw new NoSuchProductException(e);
         }

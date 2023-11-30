@@ -26,7 +26,8 @@
  */
 package com.holub.database;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 /***
  * @include /etc/license.txt
@@ -89,12 +90,12 @@ public class TableFactory {
 	public static Table load( String name, File directory )
 													throws IOException
 	{
-		if( !(name.endsWith( "." + ioFactory.fileExtension() ) || name.endsWith( "." + ioFactory.fileExtension().toUpperCase() )) )
+		if( !(name.endsWith( "." + IMPORTER_EXPORTER_ABSTRACT_FACTORY.fileExtension() ) || name.endsWith( "." + IMPORTER_EXPORTER_ABSTRACT_FACTORY.fileExtension().toUpperCase() )) )
 			throw new java.io.IOException(
 					 "Filename (" +name+ ") does not end in "
-					+"supported extension (."+ ioFactory.fileExtension() + ")" );
-        return new ConcreteTable(ioFactory.createImporter(new File( directory, name )));
+					+"supported extension (."+ IMPORTER_EXPORTER_ABSTRACT_FACTORY.fileExtension() + ")" );
+        return new ConcreteTable(IMPORTER_EXPORTER_ABSTRACT_FACTORY.createImporter(new File( directory, name )));
 	}
 
-    private static final IOFactory ioFactory = IOFactoryRegistry.getInstance();
+    private static final ImporterExporterAbstractFactory IMPORTER_EXPORTER_ABSTRACT_FACTORY = ImporterExporterFactoryRegistry.getInstance();
 }
