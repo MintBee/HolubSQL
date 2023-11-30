@@ -4,8 +4,10 @@ import com.designpattern.exception.NoSuchProductException;
 import com.designpattern.exception.OutOfStockException;
 import com.designpattern.model.*;
 
+import java.text.Collator;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,6 +47,11 @@ public class Inventory {
         for (int i = 0; i < count; i++) {
             Stock newStock = new DecayingStock(productName, expDate);
             inven.get(keyProduct).add(newStock);
+            inven.get(keyProduct).sort(new Comparator<Stock>(){
+                public int compare(Stock o1, Stock o2){
+                    return o1.getExpirationDate().compareTo(o2.getExpirationDate());
+                }
+            });
             newStock.accept(insertVisitor);
         }
     }
@@ -73,8 +80,9 @@ public class Inventory {
 
     public void deleteProduct(String productName){
         Product keyProduct = findProduct(productName);
-        keyProduct.accept(deleteVisitor);
+
         inven.remove(keyProduct);
+        keyProduct.accept(deleteVisitor);
     }
 
     /**
@@ -91,7 +99,6 @@ public class Inventory {
 
     public void sell(String productName, int count) {
         Product keyProduct = findProduct(productName);
-
         for (int i = 0; i < count ; i++) {
             sell(keyProduct);
         }
