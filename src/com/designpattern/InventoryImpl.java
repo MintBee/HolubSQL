@@ -15,7 +15,7 @@ public class InventoryImpl implements Inventory {
 
     private static Inventory instance = new InventoryImpl();
     private final Map<Product, List<Stock>> inven = new ConcurrentHashMap<>();
-    private final DbDeleteVisitor deleteVisitor = new DbDeleteVisitor();
+    private final ModelVisitor deleteVisitor = new DbDeleteVisitor();
     private final DbInsertVisitor insertVisitor = new DbInsertVisitor();
 
     private InventoryImpl() {
