@@ -54,11 +54,26 @@ public class InventoryImpl implements Inventory {
         for (int i = 0; i < count; i++) {
             Stock newStock = new DecayingStock(productName, expDate);
             inven.get(keyProduct).add(newStock);
-            inven.get(keyProduct).sort(new Comparator<Stock>(){
-                public int compare(Stock o1, Stock o2){
-                    return o1.getExpirationDate().compareTo(o2.getExpirationDate());
+            inven.get(keyProduct).sort(Comparator.nullsLast(new Comparator<Stock>() {
+                @Override
+                public int compare(Stock o1, Stock o2) {
+                    if (o1.getExpirationDate() == null) {
+                        return 1;
+                    }
+
+                    if (o2.getExpirationDate() == null) {
+                        return -1;
+                    }
+
+                    if (o1.getExpirationDate().isBefore(o2.getExpirationDate())) {
+                        return -1;
+                    }  else if (o1.getExpirationDate().isEqual(o2.getExpirationDate())) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
                 }
-            });
+            }));
             newStock.accept(insertVisitor);
         }
     }

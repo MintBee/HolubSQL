@@ -12,6 +12,9 @@ public class Main {
         InputBoundary shop = new Shop(inventory, cliOutputBoundary);
         CLIInput cli = new CLIInput(shop);
 
+        TimeSimulatorThreadRunner timeSimulatorThreadRunner = new TimeSimulatorThreadRunner(inventory, 1000);
+        timeSimulatorThreadRunner.run();
+
         cli.start();
     }
 }
